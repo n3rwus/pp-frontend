@@ -5,6 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      'primary-color-olx': '#002f34',
+      'text-box-olx-bg': '#f2f4f5',
+    },
   },
   plugins: [],
 }
+
