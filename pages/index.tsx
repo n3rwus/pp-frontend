@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Map from '../components/Map';
+
+const DEFAULT_CENTER = [50.2241331, 18.7270541]
 
 const Home: NextPage = () => {
   return (
@@ -18,6 +20,22 @@ const Home: NextPage = () => {
             Next.js!
           </a>
         </h1>
+
+        <Map className="flex min-h-[50vh] h-3/4 items-center justify-center" center={DEFAULT_CENTER} zoom={12}>
+          {({ TileLayer, Marker, Popup }) => (
+            <>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+              />
+              <Marker position={DEFAULT_CENTER}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            </>
+          )}
+        </Map>
 
         <p className="mt-3 text-2xl">
           Get started by editing{' '}
