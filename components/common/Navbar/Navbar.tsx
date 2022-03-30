@@ -11,7 +11,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import BasicButton from '../Button/BasicButton';
+import AddAnnouncementButton from '../Button/AddAnnouncementButton';
 import Image from 'next/image'
 
 
@@ -59,7 +59,7 @@ const Navbar = () => {
                                 blablabla
                             </div>
                         </IconButton>
-                        <BasicButton />
+                        <AddAnnouncementButton title='XD'/>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
