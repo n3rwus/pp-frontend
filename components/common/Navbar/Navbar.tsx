@@ -5,9 +5,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import BasicButton from '../Button/BasicButton';
+import Image from 'next/image'
+
 
 interface IProps {
     children: React.ReactElement;
@@ -30,19 +36,30 @@ const Navbar = () => {
             <HideOnScroll>
                 <AppBar>
                     <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
+                        <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+
+                        <IconButton>
+                            <ChatBubbleOutlineOutlinedIcon />
+                            <div>
+                                blablabla
+                            </div>
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            News
-                        </Typography>
-                        <Button color="inherit">Login</Button>
+                        <Button variant='text'>
+                            <ChatBubbleOutlineOutlinedIcon />
+                            <div>
+                                blablabla
+                            </div>
+                        </Button>
+                        <IconButton>
+                            <FavoriteBorderOutlinedIcon />
+                        </IconButton>
+                        <IconButton>
+                            <PersonOutlineOutlinedIcon />
+                            <div>
+                                blablabla
+                            </div>
+                        </IconButton>
+                        <BasicButton />
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
