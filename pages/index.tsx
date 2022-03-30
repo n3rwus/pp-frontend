@@ -1,13 +1,17 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import Navbar from '../components/common/Navbar/Navbar'
 import SignIn from './account'
-import Navbar from '../components/common/Navbar/HideAppBar'
 const Home: NextPage = () => {
   return (
-      <Navbar>
-        <SignIn />
-      </Navbar>
+    <div>
+      <Navbar />
+      <SignIn />
+      <SignIn />
+      <SignIn />
+      <SignIn />
+      <SignIn />
+      <SignIn />
+    </div>
   )
 }
 
