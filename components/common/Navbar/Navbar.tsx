@@ -34,7 +34,7 @@ const Navbar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>
-                <AppBar>
+                <AppBar sx={{backgroundColor: '#002f34'}}>
                     <Toolbar>
                         <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
 

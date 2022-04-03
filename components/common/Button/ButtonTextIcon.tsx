@@ -15,21 +15,21 @@ interface ButtonTextIconProps extends StylesProps {
 
 const styles = (theme: any, props: StylesProps) => ({
 	height: '100%',
-			backgroundColor: '#fff',
-			color: '#000',
-			borderRadius: '0',
-			borderColor: '#d3d3d3',
-			borderLeft: 'solid 1px #d3d3d3',
-			'&:hover': {
-				backgroundColor: '#002f34',
-				color: '#fff',
+	backgroundColor: '#fff',
+	color: '#002f34',
+	borderRadius: '0',
+	borderColor: '#f2f4f5',
+	borderLeft: 'solid 1px #f2f4f5',
+	'&:hover': {
+		backgroundColor: '#002f34',
+		color: '#fff',
 	},
 	[theme.breakpoints.down('sm')]: {
         borderRight: 0,
 		borderLeft: 0,
 		borderTop: props.topBorder ?? 0,
 		borderBottom: props.bottomBorder ?? 0,
-		borderColor: '#d3d3d3',
+		borderColor: '#f2f4f5',
     },
 });
 
