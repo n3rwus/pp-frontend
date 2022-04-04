@@ -18,34 +18,34 @@ const Home: NextPage = () => {
 		<div>
 			<Head>
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
-				<link rel='icon' href='./favicon.ico'/>
-     		</Head>
-			 <style jsx global>{`
+				<link rel='icon' href='./favicon.ico' />
+			</Head>
+			<style jsx global>{`
 					body {
 						background-image: ${"url('./backgroundExample.jpg')"};
 					}
 				`}
 			</style>
-			<Navbar/>
-			<Box sx={{ flexGrow: 1, width:'75%', mx:'auto', mt: '12%', backgroundColor: '#f2f4f5'}}>
+			<Navbar />
+			<Box sx={{ flexGrow: 1, width: '75%', mx: 'auto', mt: '12%', backgroundColor: '#f2f4f5' }}>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center'>
-					<Grid item xs={11} sx={{mt: '30px'}}>
-						<AppBar 
-							elevation={0} 
-							sx={{backgroundColor: '#FFF', position:'inherit', border: 'solid 1px #f2f4f5', borderRadius: 1}}
+					<Grid item xs={11} sx={{ mt: '30px' }}>
+						<AppBar
+							elevation={0}
+							sx={{ backgroundColor: '#FFF', position: 'inherit', border: 'solid 1px #f2f4f5', borderRadius: 1 }}
 						>
 							<Grid container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 								<Grid item xs={12} sm={5} md={7}>
 									{/* SearchBar */}
 									<TextFieldIcon
-										icon={<SearchIcon sx={{color: '#002f34', ml: '3px'}}/>}
+										icon={<SearchIcon sx={{ color: '#002f34', ml: '3px' }} />}
 										placeholder={'2 137 ogłoszeń blisko Ciebie'}
 									/>
 								</Grid>
 								<Grid item xs={12} sm={4} md={3}>
 									{/* Location Box */}
-									<SearchComboBox 
-										startIcon={<FmdGoodOutlinedIcon sx={{color: '#002f34'}} />}
+									<SearchComboBox
+										startIcon={<FmdGoodOutlinedIcon sx={{ color: '#002f34' }} />}
 										placeholder='Cała Polska'
 										leftBorder={1}
 										topBorder={1}
@@ -53,9 +53,9 @@ const Home: NextPage = () => {
 								</Grid>
 								<Grid item xs={12} sm={3} md={2}>
 									{/* SearchButton */}
-									<ButtonTextIcon 
+									<ButtonTextIcon
 										text={'Szukaj'}
-										endIcon={<SearchIcon/>}
+										endIcon={<SearchIcon />}
 										topBorder={1}
 									/>
 								</Grid>
@@ -64,38 +64,38 @@ const Home: NextPage = () => {
 					</Grid>
 				</Grid>
 				{/* Main Categories Text */}
-				<Grid item xs={12} mt={'30px'} sx={{backgroundColor: '#fff'}} justifyContent='center'>
+				<Grid item xs={12} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>
 						{'Kategorie główne'}
 					</Typography>
 				</Grid>
 				{/* Categories */}
-				<Grid item sx={{backgroundColor: '#fff'}}>
+				<Grid item sx={{ backgroundColor: '#fff' }}>
 					<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-						<Grid item xs={12} sm={6} md={3} sx={{my: '30px', textAlign: 'center'}}>
+						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
 							<ButtonCategory
-								icon={<DirectionsCarFilledRoundedIcon fontSize='large' htmlColor='#676869' sx={{mt: '10px'}}/>}
+								icon={<DirectionsCarFilledRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ffce32'}
 								text={'Motoryzacja'}
 							/>
 						</Grid>
-						<Grid item xs={12} sm={6} md={3} sx={{my: '30px', textAlign: 'center'}}>
+						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
 							<ButtonCategory
-								icon={<ImportantDevicesRoundedIcon fontSize='large' htmlColor='#676869' sx={{mt: '10px'}}/>}
+								icon={<ImportantDevicesRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ceddff'}
 								text={'Elektronika'}
 							/>
 						</Grid>
-						<Grid item xs={12} sm={6} md={3} sx={{my: '30px', textAlign: 'center'}}>
+						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
 							<ButtonCategory
-								icon={<AssignmentIndRoundedIcon fontSize='large' htmlColor='#676869' sx={{mt: '10px'}}/>}
+								icon={<AssignmentIndRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#23e5db'}
 								text={'Praca'}
 							/>
 						</Grid>
-						<Grid item xs={12} sm={6} md={3} sx={{my: '30px', textAlign: 'center'}}>
+						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
 							<ButtonCategory
-								icon={<HomeRoundedIcon fontSize='large' htmlColor='#676869' sx={{mt: '10px'}}/>}
+								icon={<HomeRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ffd6c9'}
 								text={'Dom'}
 							/>
@@ -109,7 +109,7 @@ const Home: NextPage = () => {
 					</Typography>
 				</Grid>
 				{/* About us */}
-				<Grid item xs={12} sx={{backgroundColor: '#002f34'}}>
+				<Grid item xs={12} sx={{ backgroundColor: '#002f34' }}>
 					<Typography variant='h5' component='h5' pt={'50px'} textAlign='center' fontSize={'24px'} fontWeight={'500'} color='#7f9799'>
 						{'Wyróżniaj swoje ogłoszenia!'}
 					</Typography>
@@ -117,7 +117,7 @@ const Home: NextPage = () => {
 						{'Znajdź czego szukasz na ZMITAC!'}
 					</Typography>
 				</Grid>
-				<Grid item xs={12} sx={{backgroundColor: '#cbf7ee'}}>
+				<Grid item xs={12} sx={{ backgroundColor: '#cbf7ee' }}>
 					<Typography variant='h5' component='h5' pt={'50px'} py={'20px'} textAlign='center' fontSize={'30px'} fontWeight={'500'} color='#002f34'>
 						{'ZMITAC ©'}
 					</Typography>
