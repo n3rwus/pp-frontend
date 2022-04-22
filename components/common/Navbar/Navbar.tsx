@@ -34,32 +34,29 @@ const Navbar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>
-                <AppBar sx={{backgroundColor: '#002f34'}}>
+                <AppBar sx={{ backgroundColor: '#002f34' }}>
                     <Toolbar>
-                        <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+                        <Image src="/logo/olx.png" alt="Olx Logo" width={103} height={80} layout='fixed' />
 
-                        <IconButton>
-                            <ChatBubbleOutlineOutlinedIcon />
-                            <div>
-                                blablabla
-                            </div>
-                        </IconButton>
-                        <Button variant='text'>
+                        <Button variant='text' color='warning'>
                             <ChatBubbleOutlineOutlinedIcon />
                             <div>
                                 blablabla
                             </div>
                         </Button>
+
                         <IconButton>
                             <FavoriteBorderOutlinedIcon />
                         </IconButton>
+
                         <IconButton>
                             <PersonOutlineOutlinedIcon />
                             <div>
                                 blablabla
                             </div>
                         </IconButton>
-                        <AddAnnouncementButton title='XD'/>
+
+                        <AddAnnouncementButton title='XD' />
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
