@@ -41,7 +41,7 @@ export default function NotFound() {
               <path fill="#fff" d="M312.9 191.5c0 .8-.6 1.5-1.4 1.6s-1.4-.5-1.4-1.3.6-1.5 1.4-1.6c.8-.1 1.4.5 1.4 1.3m5.6-.6c0 .8-.6 1.5-1.4 1.6-.8.1-1.4-.5-1.4-1.3s.6-1.5 1.4-1.6c.8-.1 1.4.4 1.4 1.3m5.7-.7c0 .8-.6 1.5-1.4 1.6-.8.1-1.4-.5-1.4-1.3s.6-1.5 1.4-1.6c.8-.1 1.4.5 1.4 1.3" />
             </g>
             <g>
-              <path fill="none" stroke="#4f3e7c" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4" d="M368.4 240.8s-15.4-10.5-27.3 3.5" />
+              <path fill="none" stroke="#4f3e7c" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4" d="M368.4 240.8s-15.4-10.5-27.3 3.5" />
               <g>
                 <circle cx="375.3" cy="215.6" r="5" fill="#4f3e7c" />
                 <circle cx="330.9" cy="220" r="5" fill="#4f3e7c" />
