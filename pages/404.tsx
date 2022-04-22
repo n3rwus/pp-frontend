@@ -1,5 +1,4 @@
 import type { GetStaticPropsContext } from 'next'
-import Navbar from '../components/common/Navbar/Navbar';
 
 
 export default function NotFound() {
