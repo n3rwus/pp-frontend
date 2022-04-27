@@ -3,8 +3,6 @@ import type { GetStaticPropsContext } from 'next'
 
 export default function NotFound() {
 
-
-
   return (
 
     <><style jsx global>{`
