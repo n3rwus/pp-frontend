@@ -2,24 +2,19 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import AddAnnouncementButton from '../Button/AddAnnouncementButton';
 import Image from 'next/image'
 import Grid from '@mui/material/Grid';
+import { Link } from '@mui/material';
 
 interface IProps {
     children: React.ReactElement;
 }
-
-
 
 function HideOnScroll(props: IProps) {
     const { children } = props;
@@ -33,62 +28,68 @@ function HideOnScroll(props: IProps) {
 }
 
 const Navbar = () => {
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>
-                <AppBar sx={{ backgroundColor: '#002f34' }}>
+                <AppBar sx={{ backgroundColor: '#002f34', py:'5px' }}>
                     <Toolbar>
                         <Grid
                             container
                             spacing={2}
-                            columns={16}
                             justifyContent="center"
+                            rowSpacing={2}
                             alignItems="center"
-                            direction="row"
                         >
-                            <Grid item xs={10}>
-                                <Image src="/logo/olx.png" alt="Olx Logo" width={103} height={80} layout='fixed' />
+                            <Grid item xs={4} sm={12} md={3} sx={{textAlign: 'center'}}>
+                                <Link href='/'>
+                                    <Image src="/logo/olx.png" alt="Olx Logo" width={80} height={56} />
+                                </Link>
                             </Grid>
-                            <Grid item xs={6} >
-                                <Grid container spacing={4} columns={16}>
-                                    <Grid item xs={5}>
-                                        <Button style={{ margin: '0 auto', display: "flex", color: "white" }} >
-                                            <ChatBubbleOutlineOutlinedIcon />
-                                            <Box sx={{ flexGrow: 1 }} />
-                                            <div >
-                                                Wiadomość
-                                            </div>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <IconButton style={{ margin: '0 auto', display: "flex", color: "white" }}>
-                                            <FavoriteBorderOutlinedIcon />
-                                        </IconButton>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Button color='warning' style={{ margin: '0 auto', display: "flex", color: "white" }}>
-                                            <PersonOutlineOutlinedIcon />
-                                            <div>
-                                                Mój Olx
-                                            </div>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Button color='warning' style={{ margin: '0 auto', display: "flex", color: "white" }}>
-                                            Ogłoszenia
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                            <Grid item xs={4} sm={3} md={2}>
+                                <Button
+                                    href='/404'
+                                    startIcon={<ChatBubbleOutlineOutlinedIcon />} 
+                                    fullWidth
+                                    sx={{color: "#fff" }}
+                                >
+                                    {'Wiadomości'}
+                                </Button>
                             </Grid>
-
+                            <Grid item xs={4} sm={3} md={2}>
+                                <Button
+                                    href='/404'
+                                    startIcon={<FavoriteBorderOutlinedIcon />}
+                                    fullWidth
+                                    sx={{color: "#fff" }}
+                                >
+                                    {'Ulubione'}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6} sm={3} md={2}>
+                                <Button
+                                    href='/account/authmenu'
+                                    startIcon={<PersonOutlineOutlinedIcon />}
+                                    fullWidth
+                                    sx={{color: "#fff" }}
+                                >
+                                    {'Mój Olx'}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6} sm={3} md={2}>
+                                <Button
+                                    href='/404'
+                                    fullWidth
+                                    sx={{pb:'5px', color: "#002f34",  backgroundColor: "#fff", '&:hover':{color: "#fff", backgroundColor: "inherit"}}}
+                                >
+                                    {'Ogłoszenia'}
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
             <Toolbar />
         </Box>
-
     );
 };
 
