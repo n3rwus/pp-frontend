@@ -35,45 +35,53 @@ function HideOnScroll(props: IProps) {
 const Navbar = () => {
 
     return (
-
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>
                 <AppBar sx={{ backgroundColor: '#002f34' }}>
                     <Toolbar>
-                        <Grid container spacing={2} columns={16}>
-                            <Grid item xs={8}>
+                        <Grid
+                            container
+                            spacing={2}
+                            columns={16}
+                            justifyContent="center"
+                            alignItems="center"
+                            direction="row"
+                        >
+                            <Grid item xs={10}>
                                 <Image src="/logo/olx.png" alt="Olx Logo" width={103} height={80} layout='fixed' />
                             </Grid>
-                            <Grid item xs={8}>
+                            <Grid item xs={6} >
                                 <Grid container spacing={4} columns={16}>
-                                    <Grid item xs={4}>
-                                        <Button color='warning'>
+                                    <Grid item xs={5}>
+                                        <Button style={{ margin: '0 auto', display: "flex", color: "white" }} >
                                             <ChatBubbleOutlineOutlinedIcon />
-                                            <div>
-                                                blablabla
+                                            <Box sx={{ flexGrow: 1 }} />
+                                            <div >
+                                                Wiadomość
                                             </div>
                                         </Button>
                                     </Grid>
-                                    <Grid item xs={4}>
-                                        <IconButton>
+                                    <Grid item xs={3}>
+                                        <IconButton style={{ margin: '0 auto', display: "flex", color: "white" }}>
                                             <FavoriteBorderOutlinedIcon />
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs={4}>
-                                        <IconButton>
+                                        <Button color='warning' style={{ margin: '0 auto', display: "flex", color: "white" }}>
                                             <PersonOutlineOutlinedIcon />
                                             <div>
-                                                blablabla 2
+                                                Mój Olx
                                             </div>
-                                        </IconButton>
+                                        </Button>
                                     </Grid>
                                     <Grid item xs={4}>
-                                        <Button color='warning'>
-                                            asdasda
+                                        <Button color='warning' style={{ margin: '0 auto', display: "flex", color: "white" }}>
+                                            Ogłoszenia
                                         </Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
+
                         </Grid>
                     </Toolbar>
                 </AppBar>
