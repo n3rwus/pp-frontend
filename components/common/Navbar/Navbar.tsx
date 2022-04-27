@@ -13,11 +13,13 @@ import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import AddAnnouncementButton from '../Button/AddAnnouncementButton';
 import Image from 'next/image'
-
+import Grid from '@mui/material/Grid';
 
 interface IProps {
     children: React.ReactElement;
 }
+
+
 
 function HideOnScroll(props: IProps) {
     const { children } = props;
@@ -31,37 +33,54 @@ function HideOnScroll(props: IProps) {
 }
 
 const Navbar = () => {
+
     return (
+
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>
                 <AppBar sx={{ backgroundColor: '#002f34' }}>
                     <Toolbar>
-                        <Image src="/logo/olx.png" alt="Olx Logo" width={103} height={80} layout='fixed' />
-
-                        <Button variant='text' color='warning'>
-                            <ChatBubbleOutlineOutlinedIcon />
-                            <div>
-                                blablabla
-                            </div>
-                        </Button>
-
-                        <IconButton>
-                            <FavoriteBorderOutlinedIcon />
-                        </IconButton>
-
-                        <IconButton>
-                            <PersonOutlineOutlinedIcon />
-                            <div>
-                                blablabla
-                            </div>
-                        </IconButton>
-
-                        <AddAnnouncementButton title='XD' />
+                        <Grid container spacing={2} columns={16}>
+                            <Grid item xs={8}>
+                                <Image src="/logo/olx.png" alt="Olx Logo" width={103} height={80} layout='fixed' />
+                            </Grid>
+                            <Grid item xs={8}>
+                                <Grid container spacing={4} columns={16}>
+                                    <Grid item xs={4}>
+                                        <Button color='warning'>
+                                            <ChatBubbleOutlineOutlinedIcon />
+                                            <div>
+                                                blablabla
+                                            </div>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <IconButton>
+                                            <FavoriteBorderOutlinedIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <IconButton>
+                                            <PersonOutlineOutlinedIcon />
+                                            <div>
+                                                blablabla 2
+                                            </div>
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <Button color='warning'>
+                                            asdasda
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
             <Toolbar />
         </Box>
+
     );
 };
 
