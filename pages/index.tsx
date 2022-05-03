@@ -27,7 +27,7 @@ const Home: NextPage = () => {
 				`}
 			</style>
 			<Navbar />
-			<Box sx={{ flexGrow: 1, width: '75%', mx: 'auto', mt: '12%', backgroundColor: '#f2f4f5' }}>
+			<Box sx={{ flexGrow: 1, width: '75%', mx: 'auto', mt: '120px', backgroundColor: '#f2f4f5' }}>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center'>
 					<Grid item xs={11} sx={{ mt: '30px' }}>
 						<AppBar
