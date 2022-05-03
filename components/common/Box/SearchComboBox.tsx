@@ -8,6 +8,10 @@ interface SearchComboBoxStylesProps {
 	leftBorder ?: number;
 	topBorder ?: number;
 	bottomBorder ?: number;
+	options : {
+		name: string;
+		key: number;
+	}[];
 }
 
 interface SearchComboBoxProps extends SearchComboBoxStylesProps {
@@ -46,7 +50,7 @@ const styles = (theme: any, props: SearchComboBoxStylesProps) => ({
 
 export default function SearchComboBox(props: SearchComboBoxProps) {
 	const theme = useTheme();
-	
+	const opt = props.options;
 	return (
 		
 		<Autocomplete
@@ -54,7 +58,7 @@ export default function SearchComboBox(props: SearchComboBoxProps) {
 			id='search-combo-box'
 			disableClearable
 			aria-label=''
-			options={areas.map((option) => option.name)}
+			options={opt.map((option) => option.name)}
 			renderInput={(params) => (
 			<TextField
 				{...params}
@@ -76,23 +80,3 @@ export default function SearchComboBox(props: SearchComboBoxProps) {
 		/>
 	);
 }
-
-const areas = [
-	{ name: 'Cała Polska'},
-	{ name: 'Dolnośląskie'},
-	{ name: 'Kujawsko-pomorskie'},
-	{ name: 'Lubelskie'},
-	{ name: 'Lubuskie'},
-	{ name: 'Łódzkie'},
-	{ name: 'Małopolskie'},
-	{ name: 'Mazowieckie'},
-	{ name: 'Opolskie'},
-	{ name: 'Podkarpackie'},
-	{ name: 'Podlaskie'},
-	{ name: 'Pomorskie'},
-	{ name: 'Śląskie'},
-	{ name: 'Świętokrzyskie'},
-	{ name: 'Warmińsko-mazurskie'},
-	{ name: 'Wielkopolskie'},
-	{ name: 'Zachodniopomorskie'},
-  ];

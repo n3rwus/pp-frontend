@@ -12,6 +12,7 @@ import DirectionsCarFilledRoundedIcon from '@mui/icons-material/DirectionsCarFil
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ImportantDevicesRoundedIcon from '@mui/icons-material/ImportantDevicesRounded';
 import AssignmentIndRoundedIcon from '@mui/icons-material/AssignmentIndRounded';
+import { Areas } from '../components/Utils';
 
 const Home: NextPage = () => {
 	return (
@@ -49,6 +50,7 @@ const Home: NextPage = () => {
 										placeholder='Cała Polska'
 										leftBorder={1}
 										topBorder={1}
+										options={Areas}
 									/>
 								</Grid>
 								<Grid item xs={12} sm={3} md={2}>
