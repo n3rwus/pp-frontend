@@ -2,12 +2,6 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Navbar from '../../components/common/Navbar/Navbar'
 import Head from 'next/head';
-import TextFieldIcon from '../../components/common/TextField/TextFieldIcon';
-import SearchComboBox from '../../components/common/Box/SearchComboBox';
-import ButtonTextIcon from '../../components/common/Button/ButtonTextIcon';
-import { Categories, Sorting } from '../../components/Utils';
-import SearchIcon from '@mui/icons-material/Search';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const Profile: NextPage = () => {
 	return (
