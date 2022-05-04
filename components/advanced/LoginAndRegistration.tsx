@@ -96,6 +96,7 @@ export default function LoginAndRegistration() {
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
 					<Button 
+						href='/account'
 						variant="contained"
 						fullWidth 
 						sx={{backgroundColor: '#002f34', '&:hover': {backgroundColor: '#002f34'}}}>

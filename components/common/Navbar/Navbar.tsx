@@ -47,7 +47,7 @@ const Navbar = () => {
                             </Grid>
                             <Grid item xs={4} sm={3} md={2}>
                                 <Button
-                                    href='/404'
+                                    href='/account/authmenu'
                                     startIcon={<ChatBubbleOutlineOutlinedIcon />} 
                                     fullWidth
                                     sx={{color: "#fff" }}
@@ -57,7 +57,7 @@ const Navbar = () => {
                             </Grid>
                             <Grid item xs={4} sm={3} md={2}>
                                 <Button
-                                    href='/404'
+                                    href='/account/authmenu'
                                     startIcon={<FavoriteBorderOutlinedIcon />}
                                     fullWidth
                                     sx={{color: "#fff" }}
@@ -77,11 +77,11 @@ const Navbar = () => {
                             </Grid>
                             <Grid item xs={6} sm={3} md={2}>
                                 <Button
-                                    href='/404'
+                                    href='/account/authmenu'
                                     fullWidth
                                     sx={{pb:'5px', color: "#002f34",  backgroundColor: "#fff", '&:hover':{color: "#fff", backgroundColor: "inherit"}}}
                                 >
-                                    {'Ogłoszenia'}
+                                    {'Ogłoszenie'}
                                 </Button>
                             </Grid>
                         </Grid>
