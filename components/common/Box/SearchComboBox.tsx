@@ -52,7 +52,6 @@ export default function SearchComboBox(props: SearchComboBoxProps) {
 	const theme = useTheme();
 	const opt = props.options;
 	return (
-		
 		<Autocomplete
 			freeSolo
 			id='search-combo-box'
@@ -69,9 +68,9 @@ export default function SearchComboBox(props: SearchComboBoxProps) {
 					...params.InputProps,
 					type: 'search',
 					startAdornment: (
-					  	<InputAdornment position='start'>
-							{props.startIcon}
-					  	</InputAdornment>
+							<InputAdornment position='start'>
+								{props.startIcon}
+							</InputAdornment>
 					),
 				}}
 				

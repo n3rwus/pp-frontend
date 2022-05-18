@@ -62,4 +62,4 @@ const Announcements: NextPage = () => {
 	)
 }
 
-export default Announcements
+export default Announcements;
