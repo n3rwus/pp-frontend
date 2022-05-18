@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button, Checkbox, FormControlLabel, Grid, Link, TextField, Typography } from '@mui/material';
+import { LoginDataProvider } from '../../data/LoginDataProvider';
 
 interface ITabPanelProps {
 	children?: React.ReactNode;
@@ -39,9 +40,20 @@ function a11yProps(index: number) {
 
 export default function LoginAndRegistration() {
 	const [value, setValue] = React.useState(0);
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
+	const [isRuleAccepted, setIsRuleAccepted] = React.useState(false);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 	setValue(newValue);
+	};
+
+	const handleSignIn = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+		event.preventDefault();
+		return LoginDataProvider.singIn(email, password)
+		.then(res => {
+			console.log(res);
+		});
 	};
 
 	return (
@@ -74,6 +86,8 @@ export default function LoginAndRegistration() {
 							style: { color: '#002f34' },
 						}}
 						InputProps={{ disableUnderline: true }}
+						value={email}
+						onChange={(event) => setEmail(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -87,6 +101,8 @@ export default function LoginAndRegistration() {
 							style: { color: '#002f34' },
 						}}
 						InputProps={{ disableUnderline: true }}
+						value={password}
+						onChange={(event) => setPassword(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -96,6 +112,7 @@ export default function LoginAndRegistration() {
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
 					<Button 
+						onClick={handleSignIn}
 						href='/account'
 						variant="contained"
 						fullWidth 
@@ -123,6 +140,8 @@ export default function LoginAndRegistration() {
 							style: { color: '#002f34' },
 						}}
 						InputProps={{ disableUnderline: true }}
+						value={email}
+						onChange={(event) => setEmail(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -136,6 +155,8 @@ export default function LoginAndRegistration() {
 							style: { color: '#002f34' },
 						}}
 						InputProps={{ disableUnderline: true }}
+						value={password}
+						onChange={(event) => setPassword(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -158,6 +179,8 @@ export default function LoginAndRegistration() {
 								color: '#002f34',
 								},
 							}}
+							value={isRuleAccepted}
+							onChange={(event) => setIsRuleAccepted(event.target.checked)}
 						/>
 					} 
 					label={ <Typography fontSize={'10px'} color={"#8c9ba3"} sx={{textAlign: 'center'}}>
@@ -167,6 +190,7 @@ export default function LoginAndRegistration() {
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
 					<Button 
+						disabled={!isRuleAccepted}
 						variant="contained"
 						fullWidth 
 						sx={{backgroundColor: '#002f34', '&:hover': {backgroundColor: '#002f34'}}}>
