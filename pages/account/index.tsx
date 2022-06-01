@@ -37,6 +37,7 @@ const Profile: NextPage = () => {
 					</Grid>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 						<Button
+							href='/account/settings'
 							fullWidth 
 							sx={{color:'#002f34', height: '100px'}}
 						>

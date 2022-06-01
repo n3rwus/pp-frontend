@@ -27,7 +27,11 @@ function HideOnScroll(props: IProps) {
     );
 }
 
-const Navbar = () => {
+interface iNavbar {
+    token?: string;
+}
+
+const Navbar = (props: iNavbar) => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <HideOnScroll>

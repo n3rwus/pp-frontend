@@ -190,6 +190,7 @@ export default function LoginAndRegistration() {
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
 					<Button 
+						href='/account'
 						disabled={!isRuleAccepted}
 						variant="contained"
 						fullWidth 

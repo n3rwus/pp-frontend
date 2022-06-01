@@ -14,7 +14,7 @@ const CardUploadImage = (props: iUploadImageButton) => {
 	const { image, index } = props;
 
 	return (
-		<Grid item xs={12} sm={6} md={3} sx={{mx: 'auto'}}>
+		<Grid item xs={12} sm={6} md={3}>
 			<Card sx={{ maxWidth: 345, mx: 'auto', mb: '30px' }}>
 				<CardMedia component="img" height="240" image={URL.createObjectURL(image)} alt="green iguana" />
 				<CardContent>
