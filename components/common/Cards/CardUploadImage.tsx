@@ -19,7 +19,12 @@ const CardUploadImage = (props: iUploadImageButton) => {
 				<CardMedia component="img" height="240" image={URL.createObjectURL(image)} alt="green iguana" />
 				<CardContent>
 					<Typography variant="h5" component="div" textAlign={'center'}>
-						{(index + 1)}
+						{index + 1 === 1 &&
+							'Zdjęcie główne'
+						}
+						{index + 1 !== 1 &&
+							index + 1
+						}
 					</Typography>
 				</CardContent>
 			</Card>
