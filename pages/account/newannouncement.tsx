@@ -19,6 +19,14 @@ const NewAnnouncement: NextPage = () => {
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
+	const [title, setTitle] = React.useState('');
+	const [price, setPrice] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [phoneNumber, setPhoneNumber] = React.useState('');
+	const [category, setCategory] = React.useState('');
+	const [location, setLocation] = React.useState('');
+	const [description, setDescription] = React.useState('');
+
 	return (
 		<div>
 			<Head>
@@ -28,7 +36,15 @@ const NewAnnouncement: NextPage = () => {
 			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', mt: '60px', backgroundColor: '#f2f4f5' }}>
 				<Grid item xs={12} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
-					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>
+					<Typography 
+						variant='h4'
+						component='h4'
+						py={'50px'}
+						textAlign='center'
+						fontSize={'32px'}
+						fontWeight={'500'}
+						color={'#002f34'}
+					>
 						{'Nowe ogłoszenie'}
 					</Typography>
 				</Grid>
@@ -36,15 +52,35 @@ const NewAnnouncement: NextPage = () => {
 					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
 						<TextFieldIcon
 							placeholder={'Tytuł ogłoszenia'}
+							value={title}
+							onChange={setTitle}
 						/>
 					</Grid>
 					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
 						<TextFieldIcon
 							placeholder={'Cena'}
+							value={price}
+							onChange={setPrice}
+						/>
+					</Grid>
+					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
+						<TextFieldIcon
+							placeholder={'E-mail'}
+							value={email}
+							onChange={setEmail}
+						/>
+					</Grid>
+					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
+						<TextFieldIcon
+							placeholder={'Numer telefonu'}
+							value={phoneNumber}
+							onChange={setPhoneNumber}
 						/>
 					</Grid>
 					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
 						<SearchComboBox
+							value={category}
+							onChange={setCategory}
 							placeholder='Katerogia'
 							options={OnlyCategories}
 							startIcon={<KeyboardArrowDownIcon sx={{ color: '#002f34'}} />}
@@ -52,6 +88,8 @@ const NewAnnouncement: NextPage = () => {
 					</Grid>
 					<Grid item xs={9} sm={10} md={5} sx={{backgroundColor: '#fff', m:'5px'}}>
 						<SearchComboBox
+							value={location}
+							onChange={setLocation}
 							placeholder='Lokalizacja'
 							options={OnlyAreas}
 							startIcon={<KeyboardArrowDownIcon sx={{ color: '#002f34'}} />}
@@ -61,6 +99,8 @@ const NewAnnouncement: NextPage = () => {
 						<TextField
 							fullWidth
 							placeholder='Tutaj opisz swoje ogłoszenie'
+							value={description}
+							onChange={e => setDescription(e.target.value)}
 							id='description'
 							multiline
 							minRows={5}
@@ -89,7 +129,9 @@ const NewAnnouncement: NextPage = () => {
 						</Grid>
 					)}
 					<Grid item xs={9} sm={10} md={10} sx={{mx: 'auto', mb:'50px', p: '0px !important'}}>
-						<ButtonSave />
+						<ButtonSave
+							logText={category}
+						 />
 					</Grid>
 				</Grid>
 			</Box>

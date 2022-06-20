@@ -11,6 +11,8 @@ interface StylesProps {
 interface TextFieldIconProps extends StylesProps {
 	icon?: React.ReactElement;
 	placeholder?: string;
+	value?: string;
+	onChange?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const styles = (theme: any, props: StylesProps) => ({
@@ -38,11 +40,19 @@ const styles = (theme: any, props: StylesProps) => ({
 export default function TextFieldIcon(props: TextFieldIconProps) {
 	const theme = useTheme();
 
+	const {
+		value,
+		onChange,
+		placeholder,
+	} = props;
+
 	return (
 		<Input
 			id='icon-textfield'
-			placeholder={props.placeholder}
+			placeholder={placeholder}
 			fullWidth
+			value={value}
+			onChange={e => onChange!(e.target.value)}
 			sx={styles(theme, props)}
 			disableUnderline={true}
 			startAdornment = {
