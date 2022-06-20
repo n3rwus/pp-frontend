@@ -12,6 +12,8 @@ interface SearchComboBoxStylesProps {
 		name: string;
 		key: number;
 	}[];
+	value?: string;
+	onChange: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface SearchComboBoxProps extends SearchComboBoxStylesProps {
@@ -51,11 +53,18 @@ const styles = (theme: any, props: SearchComboBoxStylesProps) => ({
 export default function SearchComboBox(props: SearchComboBoxProps) {
 	const theme = useTheme();
 	const opt = props.options;
+
+	const onValueChange = (event: object, value: any) => {
+		props.onChange(value);
+	}
+
 	return (
 		<Autocomplete
 			freeSolo
 			id='search-combo-box'
 			disableClearable
+			value={props.value}
+			onChange={onValueChange}
 			aria-label=''
 			options={opt.map((option) => option.name)}
 			renderInput={(params) => (
@@ -73,7 +82,6 @@ export default function SearchComboBox(props: SearchComboBoxProps) {
 							</InputAdornment>
 					),
 				}}
-				
 			/>
 			)}
 		/>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Navbar from '../../components/common/Navbar/Navbar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SimplyAdvert from '../../components/common/Advert/SimplyAdvert';
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -44,6 +45,18 @@ const Home: NextPage = () => {
 							{'Ogłoszenia'} 
 						</Typography>
 						<hr/>
+					</Grid>
+					<Grid item xs={3} sx={{my: '20px'}}>
+						<SimplyAdvert index={1}/>
+					</Grid>
+					<Grid item xs={3} sx={{my: '20px'}}>
+						<SimplyAdvert index={1}/>
+					</Grid>
+					<Grid item xs={3} sx={{my: '20px'}}>
+						<SimplyAdvert index={1}/>
+					</Grid>
+					<Grid item xs={3} sx={{my: '20px'}}>
+						<SimplyAdvert index={1}/>
 					</Grid>
 				</Grid>
 			</Box>
