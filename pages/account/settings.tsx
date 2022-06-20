@@ -3,6 +3,7 @@ import React from 'react';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
 import Navbar from '../../components/common/Navbar/Navbar';
+import { useRouter } from 'next/router';
 
 interface iSettings {
 	token ?: string;
@@ -11,15 +12,18 @@ interface iSettings {
 const Settings = (props: iSettings) => {
 	const [email, changeEmail] = React.useState('');
 
+	const router = useRouter();
+	const {
+		query: { id, jwtToken },
+	} = router;
+
 	const {
 		token,
 	} = props;
 
 	return (
 		<React.Fragment>
-			<Navbar
-				token={token}
-			/>
+			<Navbar jwtToken={jwtToken} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '80%', mx: 'auto' }}>
 				<Grid container spacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }} alignItems='center' textAlign={'center'}>
 					<Grid item xs={12}>

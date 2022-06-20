@@ -13,8 +13,14 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ImportantDevicesRoundedIcon from '@mui/icons-material/ImportantDevicesRounded';
 import AssignmentIndRoundedIcon from '@mui/icons-material/AssignmentIndRounded';
 import { Areas } from '../components/Utils';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+	const router = useRouter();
+	const {
+		query: { id, jwtToken },
+	} = router;
+
 	return (
 		<div>
 			<Head>
@@ -27,7 +33,7 @@ const Home: NextPage = () => {
 					}
 				`}
 			</style>
-			<Navbar />
+			<Navbar jwtToken={jwtToken} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '75%', mx: 'auto', mt: '120px', backgroundColor: '#f2f4f5' }}>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center'>
 					<Grid item xs={11} sx={{ mt: '30px' }}>
