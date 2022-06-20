@@ -2,8 +2,15 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Navbar from '../../components/common/Navbar/Navbar'
 import Head from 'next/head';
+import { useRouter } from "next/router"
+import Link from 'next/link';
 
 const Profile: NextPage = () => {
+	const router = useRouter();
+	const {
+		query: { id, jwtToken },
+	} = router;
+
 	return (
 		<div>
 			<Head>
@@ -19,16 +26,20 @@ const Profile: NextPage = () => {
 				</Grid>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{py:'50px'}}>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
-						<Button
-							fullWidth
-							sx={{color:'#002f34', height: '100px'}}
+						<Link 
+							href = {{pathname:'/account/messages', query: {jwtToken: jwtToken, id: id}}}
 						>
-							{'Wiadomości'}
-						</Button>
+							<Button
+								fullWidth
+								sx={{color:'#002f34', height: '100px'}}
+							>
+								{'Wiadomości'}
+							</Button>
+						</Link>
 					</Grid>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 						<Button 
-							href='/account/announcements'
+							href={'/account/announcements'}
 							fullWidth 
 							sx={{color:'#002f34', height: '100px'}}
 						>
@@ -37,7 +48,7 @@ const Profile: NextPage = () => {
 					</Grid>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 						<Button
-							href='/account/settings'
+							href={'/account/settings/'}
 							fullWidth 
 							sx={{color:'#002f34', height: '100px'}}
 						>
