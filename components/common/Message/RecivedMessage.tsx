@@ -26,7 +26,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 				</Grid>
 				<hr style={{ margin: '0px' }} />
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
-					<Link href='dupa'>
+					<Link href='/profile'>
 						<Typography variant="h5" component="div" textAlign={'center'}>
 							{'Od: Janusz'}
 						</Typography>
