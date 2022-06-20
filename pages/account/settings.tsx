@@ -6,24 +6,25 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import { useRouter } from 'next/router';
 
 interface iSettings {
-	token ?: string;
+	tokens ?: string;
 }
 
 const Settings = (props: iSettings) => {
 	const [email, changeEmail] = React.useState('');
 
 	const router = useRouter();
-	const {
-		query: { id, jwtToken },
-	} = router;
 
-	const {
-		token,
-	} = props;
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const logout = () => {
+		localStorage.setItem('token', '');
+		localStorage.setItem('id', '');
+	}
 
 	return (
 		<React.Fragment>
-			<Navbar jwtToken={jwtToken} id={id}/>
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '80%', mx: 'auto' }}>
 				<Grid container spacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }} alignItems='center' textAlign={'center'}>
 					<Grid item xs={12}>
@@ -57,17 +58,17 @@ const Settings = (props: iSettings) => {
 					</Grid>
 					<Grid item xs={12}>
 						<Button  variant="contained" sx={{height: '56px', width: '330px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#e0e0e0', color: '#002f34'}}}>
-							{'Reset Password'}
+							{'Zresetuj hasło'}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
 						<Button  variant="contained" sx={{height: '56px', width: '330px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#e0e0e0', color: '#002f34'}}}>
-							{'Delete Account'}
+							{'Usuń Konto'}
 						</Button>
 					</Grid>
 					<Grid item xs={12}>
-						<Button href='/' variant="contained" sx={{height: '56px', width: '330px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#e0e0e0', color: '#002f34'}}}>
-							{'Logout'}
+						<Button href='/' onClick={logout} variant="contained" sx={{height: '56px', width: '330px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#e0e0e0', color: '#002f34'}}}>
+							{'Wyloguj'}
 						</Button>
 					</Grid>
 				</Grid>

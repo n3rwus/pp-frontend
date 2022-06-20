@@ -28,8 +28,8 @@ function HideOnScroll(props: IProps) {
 }
 
 interface iNavbar {
-    jwtToken?: string | string[];
-    id?: string | string[];
+    jwtToken?: string | null;
+    id?: string | null;
 }
 
 const Navbar = (props: iNavbar) => {
@@ -51,12 +51,12 @@ const Navbar = (props: iNavbar) => {
                             alignItems="center"
                         >
                             <Grid item xs={4} sm={12} md={3} sx={{textAlign: 'center'}}>
-                                <Link href={{pathname:  '/', query: jwtToken && id ? {jwtToken:jwtToken, id:id} : {}}}>
+                                <Link href={{pathname:  '/'}}>
                                     <Image src="/logo/olx.png" alt="Olx Logo" width={80} height={56} />
                                 </Link>
                             </Grid>
                             <Grid item xs={4} sm={3} md={2}>
-                                <Link href={{pathname: jwtToken && id ? '/account/messages' : '/account/authmenu', query: jwtToken && id ? {jwtToken:jwtToken, id:id} : {}}}>
+                                <Link href={{pathname: jwtToken && id ? '/account/messages' : '/account/authmenu'}}>
                                     <Button
                                         startIcon={<ChatBubbleOutlineOutlinedIcon />} 
                                         fullWidth
@@ -67,7 +67,7 @@ const Navbar = (props: iNavbar) => {
                                 </Link>
                             </Grid>
                             <Grid item xs={4} sm={3} md={2}>
-                                <Link href={{pathname: jwtToken && id ? '/account/favorites' : '/account/authmenu', query: jwtToken && id ? {jwtToken:jwtToken, id:id} : {}}}>
+                                <Link href={{pathname: jwtToken && id ? '/account/favorites' : '/account/authmenu'}}>
                                     <Button
                                         startIcon={<FavoriteBorderOutlinedIcon />}
                                         fullWidth
@@ -78,7 +78,7 @@ const Navbar = (props: iNavbar) => {
                                 </Link>
                             </Grid>
                             <Grid item xs={6} sm={3} md={2}>
-                                <Link href={{pathname: jwtToken && id ? '/account' : '/account/authmenu', query: jwtToken && id ? {jwtToken:jwtToken, id:id} : {}}}>
+                                <Link href={{pathname: jwtToken && id ? '/account' : '/account/authmenu'}}>
                                     <Button
                                         startIcon={<PersonOutlineOutlinedIcon />}
                                         fullWidth
@@ -89,7 +89,7 @@ const Navbar = (props: iNavbar) => {
                                 </Link>
                             </Grid>
                             <Grid item xs={6} sm={3} md={2}>
-                                <Link href={{pathname: jwtToken && id ? '/account/newannouncement' : '/account/authmenu', query: jwtToken && id ? {jwtToken:jwtToken, id:id} : {}}}>
+                                <Link href={{pathname: jwtToken && id ? '/account/newannouncement' : '/account/authmenu'}}>
                                     <Button
                                         fullWidth
                                         sx={{pb:'5px', color: "#002f34",  backgroundColor: "#fff", '&:hover':{color: "#fff", backgroundColor: "inherit"}}}

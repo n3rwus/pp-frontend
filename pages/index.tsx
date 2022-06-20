@@ -17,9 +17,8 @@ import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
 	const router = useRouter();
-	const {
-		query: { id, jwtToken },
-	} = router;
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
 	return (
 		<div>
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
 					}
 				`}
 			</style>
-			<Navbar jwtToken={jwtToken} id={id}/>
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '75%', mx: 'auto', mt: '120px', backgroundColor: '#f2f4f5' }}>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center'>
 					<Grid item xs={11} sx={{ mt: '30px' }}>

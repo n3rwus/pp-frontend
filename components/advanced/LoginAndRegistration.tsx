@@ -66,9 +66,10 @@ export default function LoginAndRegistration() {
 		.then(res => {
 			console.log(res);
 			if (res.jwtToken && res.id) {
+				localStorage.setItem('token', res.jwtToken);
+				localStorage.setItem('id', res.id);
 				router.push({
 					pathname: '/account',
-					query: { id: res.id, jwtToken: res.jwtToken}
 				});
 			} else {
 				if(res.error !== 0) {

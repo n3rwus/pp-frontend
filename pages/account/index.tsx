@@ -7,9 +7,14 @@ import Link from 'next/link';
 
 const Profile: NextPage = () => {
 	const router = useRouter();
-	const {
-		query: { id, jwtToken },
-	} = router;
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const logout = () => {
+		localStorage.setItem('token', '');
+		localStorage.setItem('id', '');
+	}
+
 
 	return (
 		<div>
@@ -17,7 +22,7 @@ const Profile: NextPage = () => {
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
-			<Navbar jwtToken={jwtToken} id={id}/>
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', mt: '120px', backgroundColor: '#f2f4f5' }}>
 				<Grid item xs={12} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>
@@ -27,7 +32,7 @@ const Profile: NextPage = () => {
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{py:'50px'}}>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 						<Link 
-							href = {{pathname:'/account/messages', query: {jwtToken: jwtToken, id: id}}}
+							href = {{pathname:'/account/messages'}}
 						>
 							<Button
 								fullWidth
@@ -39,7 +44,7 @@ const Profile: NextPage = () => {
 					</Grid>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 							<Link 
-								href = {{pathname:'/account/announcements', query: {jwtToken: jwtToken, id: id}}}
+								href = {{pathname:'/account/announcements'}}
 							>
 							<Button 
 								fullWidth 
@@ -51,7 +56,7 @@ const Profile: NextPage = () => {
 					</Grid>
 					<Grid item xs={11} sm={5} md={2} sx={{backgroundColor: '#fff', m: '10px', pl: '0 !important'}}>
 						<Link 
-							href = {{pathname:'/account/settings', query: {jwtToken: jwtToken, id: id}}}
+							href = {{pathname:'/account/settings'}}
 						>
 							<Button
 								fullWidth
@@ -66,6 +71,7 @@ const Profile: NextPage = () => {
 							href='/'
 							fullWidth 
 							sx={{color:'#002f34', height: '100px'}}
+							onClick={logout}
 						>
 							{'Wyloguj'}
 					</Button>

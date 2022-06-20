@@ -12,9 +12,9 @@ import { useRouter } from 'next/router';
 
 const Announcements: NextPage = () => {
 	const router = useRouter();
-	const {
-		query: { id, jwtToken },
-	} = router;
+
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
 	return (
 		<div>
@@ -22,7 +22,7 @@ const Announcements: NextPage = () => {
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
-			<Navbar jwtToken={jwtToken} id={id}/>
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', mt: '120px', backgroundColor: '#f2f4f5' }}>
 				<Grid item xs={12} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>

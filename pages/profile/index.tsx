@@ -8,9 +8,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Home: NextPage = () => {
 	const router = useRouter();
-	const {
-		query: { id, jwtToken },
-	} = router;
+
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
 	return (
 		<div>
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
-			<Navbar jwtToken={jwtToken} id={id}/>
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '90%', mx: 'auto', mt: '120px' }}>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} alignItems='center' justifyItems={'center'} justifyContent={'center'}>
 					<Grid item>
