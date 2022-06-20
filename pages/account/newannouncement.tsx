@@ -10,9 +10,14 @@ import React from 'react';
 import CardUploadImage from '../../components/common/Cards/CardUploadImage';
 import ButtonSave from '../../components/common/Button/ButtonSave';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useRouter } from 'next/router';
 
 const NewAnnouncement: NextPage = () => {
 	const [images, setImages] = React.useState<FileList>();
+	const router = useRouter();
+
+	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
 	return (
 		<div>
@@ -20,7 +25,7 @@ const NewAnnouncement: NextPage = () => {
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
-			<Navbar />
+			<Navbar jwtToken={token} id={id}/>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', mt: '60px', backgroundColor: '#f2f4f5' }}>
 				<Grid item xs={12} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>

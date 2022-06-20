@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button, Checkbox, FormControlLabel, Grid, Link, TextField, Typography } from '@mui/material';
-import { LoginDataProvider } from '../../data/LoginDataProvider';
-
+import { AuthenticationDataProvider } from '../../data/AuthenticationDataProvider';
+import { useRouter } from "next/router"
 interface ITabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -39,22 +39,56 @@ function a11yProps(index: number) {
 }
 
 export default function LoginAndRegistration() {
+	const router = useRouter();
+	
 	const [value, setValue] = React.useState(0);
+	const [status, setStatus] = React.useState<number | undefined>();
+ 
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
-	const [isRuleAccepted, setIsRuleAccepted] = React.useState(false);
+	const [firstName, setFirstName] = React.useState("");
+	const [lastName, setLastName] = React.useState("");
+	const [username, setUsername] = React.useState("");
+
+	const [jwtToken, setJwtToken] = React.useState<string | undefined>();
+	const [id, setId] = React.useState<string | undefined>();
+	const [refreshToken, setRefreshToken] = React.useState<string | undefined>();
+
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-	setValue(newValue);
+		setValue(newValue);
+		setStatus(0);
 	};
 
 	const handleSignIn = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
 		event.preventDefault();
-		return LoginDataProvider.singIn(email, password)
+		return AuthenticationDataProvider.singIn(username, password)
 		.then(res => {
 			console.log(res);
+			if (res.jwtToken && res.id) {
+				localStorage.setItem('token', res.jwtToken);
+				localStorage.setItem('id', res.id);
+				router.push({
+					pathname: '/account',
+				});
+			} else {
+				if(res.error !== 0) {
+					setStatus(res.error);
+				}
+			}
+			const cookieValue = document.cookie;
+			console.log(cookieValue);
 		});
 	};
+
+	const handleRegister = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+		event.preventDefault();
+		return AuthenticationDataProvider.register(email, password, firstName, lastName, username)
+		.then(res => {
+			console.log(res);
+			setStatus(res);
+		});
+	}
 
 	return (
 	<Box sx={{ width: '25%', minWidth: '300px', mx: 'auto', mt: '120px', bgcolor: 'background.paper', borderRadius: '5px' }}>
@@ -78,16 +112,16 @@ export default function LoginAndRegistration() {
 				<Grid item xs={12}>
 					<TextField
 						fullWidth
-						label='E-mail (do konta ZMITAC)'
-						placeholder='E-mail (do konta ZMITAC)'
-						id='email'
+						label='Nazwa Użytkownika'
+						placeholder='Nazwa Użytkownika'
+						id='usernameSignIn'
 						variant='filled'
 						InputLabelProps={{
 							style: { color: '#002f34' },
 						}}
 						InputProps={{ disableUnderline: true }}
-						value={email}
-						onChange={(event) => setEmail(event.target.value)}
+						value={username}
+						onChange={(event) => setUsername(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -95,7 +129,7 @@ export default function LoginAndRegistration() {
 						fullWidth
 						label='Hasło'
 						placeholder='Hasło'
-						id='password'
+						id='passwordSignIn'
 						variant='filled'
 						InputLabelProps={{
 							style: { color: '#002f34' },
@@ -111,7 +145,7 @@ export default function LoginAndRegistration() {
 					</Link>
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
-					<Button 
+					<Button
 						onClick={handleSignIn}
 						href='/account'
 						variant="contained"
@@ -120,6 +154,13 @@ export default function LoginAndRegistration() {
 						{'Zaloguj się'}
 					</Button>
 				</Grid>
+				{status === 400 &&
+					<Grid item xs={12}>
+						<Typography fontSize={'12px'} color={"#940000"} sx={{textAlign: 'center'}}>
+							{'Niepoprawny login lub hasło'}
+						</Typography>
+					</Grid>
+				}
 				<Grid item xs={12}>
 					<Typography fontSize={'12px'} color={"#0c383d"} sx={{textAlign: 'center'}}>
 						{'Zalogowanie oznacza akceptację Regulaminu serwisu ZMITAC.pl w aktualnym brzmieniu. Jeśli nie akceptujesz warunków zmienionego Regulaminu serwisu ZMITAC.pl, wyślij oświadczenie o rozwiązaniu Umowy w trybie przewidzianym w Regulaminie.'}
@@ -132,8 +173,8 @@ export default function LoginAndRegistration() {
 				<Grid item xs={12}>
 					<TextField
 						fullWidth
-						label='E-mail (do konta ZMITAC)'
-						placeholder='E-mail (do konta ZMITAC)'
+						label='E-mail'
+						placeholder='E-mail'
 						id='email'
 						variant='filled'
 						InputLabelProps={{
@@ -160,44 +201,82 @@ export default function LoginAndRegistration() {
 					/>
 				</Grid>
 				<Grid item xs={12}>
-					<Typography fontSize={'12px'} color={"#0c383d"} sx={{textAlign: 'center'}}>
-						{'Klikając przycisk zarejestruj się, akceptuję Regulamin.'}
-					</Typography>
+					<TextField
+						fullWidth
+						label='Imię'
+						placeholder='Podaj imię'
+						id='password'
+						variant='filled'
+						InputLabelProps={{
+							style: { color: '#002f34' },
+						}}
+						InputProps={{ disableUnderline: true }}
+						value={firstName}
+						onChange={(event) => setFirstName(event.target.value)}
+					/>
 				</Grid>
 				<Grid item xs={12}>
-					<Typography fontSize={'12px'} color={"#0c383d"} sx={{textAlign: 'center'}}>
-						{'Przyjmuję do wiadomości, że ZMITAC wykorzystuje moje dane osobowe zgodnie z Polityką prywatności oraz Polityką dotyczącą plików cookie i podobnych technologii. ZMITAC wykorzystuje zautomatyzowane systemy i partnerów do analizowania, w jaki sposób korzystam z usług w celu zapewnienia odpowiedniej funkcjonalności produktu, treści, dostosowanych i opartych na zainteresowaniach reklam, jak również ochrony przed spamem, złośliwym oprogramowaniem i nieuprawnionym korzystaniem z naszych usług.'}
-					</Typography>
+					<TextField
+						fullWidth
+						label='Nazwisko'
+						placeholder='Podaj nazwisko'
+						id='password'
+						variant='filled'
+						InputLabelProps={{
+							style: { color: '#002f34' },
+						}}
+						InputProps={{ disableUnderline: true }}
+						value={lastName}
+						onChange={(event) => setLastName(event.target.value)}
+					/>
 				</Grid>
 				<Grid item xs={12}>
-				<FormControlLabel 
-					control={
-						<Checkbox
-							sx={{
-								color: '#002f34',
-								'&.Mui-checked': {
-								color: '#002f34',
-								},
-							}}
-							value={isRuleAccepted}
-							onChange={(event) => setIsRuleAccepted(event.target.checked)}
-						/>
-					} 
-					label={ <Typography fontSize={'10px'} color={"#8c9ba3"} sx={{textAlign: 'center'}}>
-						{"Wyrażam zgodę na używanie przez Grupę ZMITAC sp. z o.o. środków komunikacji elektronicznej oraz telekomunikacyjnych urządzeń końcowych w celu przesyłania mi informacji handlowych oraz prowadzenia marketingu (np. newsletter, wiadomości SMS) przez Grupę ZMITAC sp. z o.o., podmioty powiązane i partnerów biznesowych. Moja zgoda obejmuje numery telefonów i adresy e-mail wykorzystywane podczas korzystania z usług Grupy ZMITAC Sp. z o.o. Wyrażoną zgodę można wycofać lub ograniczyć w dowolnej chwili za pomocą odpowiednich ustawień konta lub zgłaszając nam takie żądanie."}
-					</Typography>}
+					<TextField
+						fullWidth
+						label='Nazwa Użytkownika'
+						placeholder='Podaj nazwę użytkownika'
+						id='password'
+						variant='filled'
+						InputLabelProps={{
+							style: { color: '#002f34' },
+						}}
+						InputProps={{ disableUnderline: true }}
+						value={username}
+						onChange={(event) => setUsername(event.target.value)}
 					/>
 				</Grid>
 				<Grid item xs={12} sx={{textAlign: 'center'}}>
 					<Button 
-						href='/account'
-						disabled={!isRuleAccepted}
+						onClick={handleRegister}
+						href=''
+						disabled={false}
 						variant="contained"
 						fullWidth 
 						sx={{backgroundColor: '#002f34', '&:hover': {backgroundColor: '#002f34'}}}>
 						{'Zajerestruj się'}
 					</Button>
 				</Grid>
+				{status === 200 &&
+					<Grid item xs={12}>
+						<Typography fontSize={'12px'} color={"#0f9200"} sx={{textAlign: 'center'}}>
+							{'Twoje konto zostało pomyślnie utworzone'}
+						</Typography>
+					</Grid>
+				}
+				{status === 400 &&
+					<Grid item xs={12}>
+						<Typography fontSize={'12px'} color={"#940000"} sx={{textAlign: 'center'}}>
+							{'Podana nazwa użytkownika jest zajęta'}
+						</Typography>
+					</Grid>
+				}
+				{status == undefined &&
+					<Grid item xs={12}>
+						<Typography fontSize={'12px'} color={"#0c383d"} sx={{textAlign: 'center'}}>
+							{'Klikając przycisk zarejestruj się, akceptuję Regulamin.'}
+						</Typography>
+					</Grid>
+				}
 			</Grid>
 		</TabPanel>
 	</Box>
