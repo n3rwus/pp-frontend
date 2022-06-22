@@ -221,8 +221,8 @@ const NewAnnouncement: NextPage = () => {
 				isModal={isModal}
 				modalOnChange={setModal}
 				status={status}
-				successText={'New advert successfully creaded'}
-				errorText={'An error occurs'}
+				successText={'New advert successfully created'}
+				errorText={'An error occured'}
 				closeText={status === 200 ? 'Go to your adverts' : 'Close'}
 			/>
 		</div>

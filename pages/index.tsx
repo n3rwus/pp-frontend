@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppBar, Box, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import SearchIcon from '@mui/icons-material/Search';
@@ -19,6 +20,9 @@ const Home: NextPage = () => {
 	const router = useRouter();
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const [searchText, setSearchText] = React.useState('');
+	const [location, setLocation] = React.useState('');
 
 	return (
 		<div>
@@ -46,6 +50,8 @@ const Home: NextPage = () => {
 									<TextFieldIcon
 										icon={<SearchIcon sx={{ color: '#002f34', ml: '3px' }} />}
 										placeholder={'2 137 ogłoszeń blisko Ciebie'}
+										value={searchText}
+										onChange={setSearchText}
 									/>
 								</Grid>
 								<Grid item xs={12} sm={4} md={3}>
@@ -56,6 +62,7 @@ const Home: NextPage = () => {
 										leftBorder={1}
 										topBorder={1}
 										options={Areas}
+										onChange={setLocation}
 									/>
 								</Grid>
 								<Grid item xs={12} sm={3} md={2}>

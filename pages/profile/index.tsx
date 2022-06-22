@@ -47,16 +47,16 @@ const Home: NextPage = () => {
 						<hr/>
 					</Grid>
 					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert index={1}/>
+						<SimplyAdvert advertId={1}/>
 					</Grid>
 					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert index={1}/>
+						<SimplyAdvert advertId={1}/>
 					</Grid>
 					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert index={1}/>
+						<SimplyAdvert advertId={1}/>
 					</Grid>
 					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert index={1}/>
+						<SimplyAdvert advertId={1}/>
 					</Grid>
 				</Grid>
 			</Box>
