@@ -54,7 +54,6 @@ export default function LoginAndRegistration() {
 	const [id, setId] = React.useState<string | undefined>();
 	const [refreshToken, setRefreshToken] = React.useState<string | undefined>();
 
-
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 		setStatus(0);

@@ -13,6 +13,7 @@ interface TextFieldIconProps extends StylesProps {
 	placeholder?: string;
 	value?: string;
 	onChange?: React.Dispatch<React.SetStateAction<string>>;
+	error?: boolean;
 }
 
 const styles = (theme: any, props: StylesProps) => ({
@@ -44,6 +45,7 @@ export default function TextFieldIcon(props: TextFieldIconProps) {
 		value,
 		onChange,
 		placeholder,
+		error,
 	} = props;
 
 	return (
@@ -52,9 +54,10 @@ export default function TextFieldIcon(props: TextFieldIconProps) {
 			placeholder={placeholder}
 			fullWidth
 			value={value}
+			error={error}
 			onChange={e => onChange!(e.target.value)}
 			sx={styles(theme, props)}
-			disableUnderline={true}
+			disableUnderline={!error}
 			startAdornment = {
 				<InputAdornment position='start'>
 					{props.icon}
