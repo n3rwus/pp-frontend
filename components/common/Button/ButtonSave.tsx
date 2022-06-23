@@ -5,13 +5,14 @@ import { styled } from '@mui/material/styles';
 interface iButtonSave {
 	disabled?: boolean;
 	logText?: string;
+	onSaveClick: () => Promise<void>;
 }
 const Input = styled('input')({
 	display: 'none',
 });
 
 const ButtonSave = (props: iButtonSave) => {
-	const { disabled } = props;
+	const { disabled, onSaveClick } = props;
 
 	const onClick = () => {
 		console.log(props.logText);
@@ -25,7 +26,7 @@ const ButtonSave = (props: iButtonSave) => {
 				disabled={disabled} 
 				sx={{ height: '56px',  backgroundColor: '#002f34', ":hover": {backgroundColor: '#7f9799'}}} 
 				fullWidth
-				onClick={onClick}
+				onClick={onSaveClick}
 			>
 				{'Zapisz ogłoszenie'}
 			</Button>

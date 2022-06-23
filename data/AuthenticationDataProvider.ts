@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 interface LoginDataResponse {
 	id: string;
 	jwtToken: string;
@@ -42,9 +44,8 @@ export class AuthenticationDataProvider {
 			Password: password,
 		}, {
 			headers: {
-				'Accept' : 'application/json',
-				'Content-Type': 'application/json'
-			}
+			"withCredentials": true
+		}
 		}).then(res => {
 			data.jwtToken = res.data.jwtToken;
 			data.id = res.data.id;
@@ -56,6 +57,25 @@ export class AuthenticationDataProvider {
 				console.log(error.response!.status);
 
 				data.error = error.response!.status;
+			}
+			return data;
+		});
+	}
+
+	public static refresh() {
+		let data = 0;
+		return axios.post(`http://localhost:4000/users/refresh-token`, {
+		}, {headers: {
+			"withCredentials": true
+		}}).then(res => {
+			console.log(res);
+			console.log(res.data);
+			data = res.status;
+			return data;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				data = error.response!.status;
 			}
 			return data;
 		});
