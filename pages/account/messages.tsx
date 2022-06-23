@@ -31,6 +31,7 @@ const Messages: NextPage = () => {
 						senderUsername=''
 						messageId=''
 						message=''
+						renderAdvert={true}
 					/>
 				</Grid>
 				<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
@@ -41,6 +42,7 @@ const Messages: NextPage = () => {
 						senderUsername=''
 						messageId=''
 						message=''
+						renderAdvert={true}
 					/>
 				</Grid>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{py:'50px'}}>

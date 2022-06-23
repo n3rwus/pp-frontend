@@ -11,10 +11,11 @@ interface iRecivedMessage {
 	senderId: string;
 	messageId: string;
 	message: string;
+	renderAdvert?: boolean;
 }
 
 const RecivedMessage = (props: iRecivedMessage) => {
-	const { advertId, advertTitle, senderUsername, senderId, messageId, message } = props;
+	const { advertId, advertTitle, senderUsername, senderId, messageId, message, renderAdvert } = props;
 
 	return (
 		<Grid item xs={6}>
@@ -33,14 +34,18 @@ const RecivedMessage = (props: iRecivedMessage) => {
 					</Link>
 				</Grid>
 				<hr style={{ margin: '0px' }} />
-				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
-					<Link href='dupa'>
-						<Typography variant="h5" component="div" textAlign={'center'}>
-							{'Ogłoszenie: Kupno samochodu'}
-						</Typography>
-					</Link>
-				</Grid>
-				<hr style={{ margin: '0px' }} />
+				{renderAdvert &&
+					<div>
+						<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
+							<Link href='dupa'>
+								<Typography variant="h5" component="div" textAlign={'center'}>
+									{'Ogłoszenie: Kupno samochodu'}
+								</Typography>
+							</Link>
+						</Grid>
+						<hr style={{ margin: '0px' }} />
+					</div>
+				}
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#f2f4f5', color: '#002f34'}}}>
 					<Typography variant="h5" component="div" textAlign={'center'} >
 						{'Wiadomość: Nie sprzedam Ci tego passata tak tanio, całe życie nim jeździłem'}

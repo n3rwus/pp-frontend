@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Box, Grid } from '@mui/material';
 import { iSimplyAdvert } from '../../../data/AdvertDataProvider';
 import { base64ToArrayBuffer } from '../../Utils';
+import Link from 'next/link';
 
 const SimplyAdvert = (props: iSimplyAdvert) => {
 	const { advertId, image, title, price } = props;
@@ -19,22 +20,24 @@ const SimplyAdvert = (props: iSimplyAdvert) => {
 	}
 
 	return (
-		<Card sx={{ maxWidth: 380, mx:'auto'}}>
-			<CardMedia
-				component="img"
-				height="200"
-				image={image ? createImage() : 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
-				alt="Live from space album cover"
-			/>
-			<CardContent>
-				<Typography gutterBottom variant="h5" component="div">
-					{title ?? 'Tytuł'}
-				</Typography>
-				<Typography variant="body2" color="text.secondary">
-					{(price ?? 'Cena') + ' zł'}
-				</Typography>
-			</CardContent>
-	  </Card>
+		<Link href={{pathname: '/account/advert/', query:{advertId: advertId}}}>
+			<Card sx={{ maxWidth: 380, mx:'auto', border: 'solid 1px #fff', ':hover': {border: 'solid 1px #002f34'}}}>
+				<CardMedia
+					component="img"
+					height="200"
+					image={image ? createImage() : 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
+					alt="Live from space album cover"
+				/>
+				<CardContent>
+					<Typography gutterBottom variant="h5" component="div">
+						{title ?? 'Tytuł'}
+					</Typography>
+					<Typography variant="body2" color="text.secondary">
+						{(price ?? 'Cena') + ' zł'}
+					</Typography>
+				</CardContent>
+		</Card>
+	  </Link>
 	);
 };
 

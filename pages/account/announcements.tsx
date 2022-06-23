@@ -97,6 +97,10 @@ const Announcements: NextPage = () => {
 					<Grid item xs={12} sx={{ m:'5px'}}>
 						<hr />
 					</Grid>
+				</Grid>
+				</Box>
+			<Box sx={{ flexGrow: 1, width: '80%', mx: 'auto', backgroundColor: '#fff' }}>
+				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{pt:'50px'}}>
 						{renderSimplyAdverts}
 					<Grid item xs={12} minHeight={'200px'}>
 					</Grid>
