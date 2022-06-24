@@ -10,12 +10,11 @@ interface iUploadImageButton {
 	id: string | null;
 	jwtToken: string | null;
 	advertId: number;
+	image?: string;
 }
 
 const AdvertImage = (props: iUploadImageButton) => {
-	const { id, jwtToken, advertId } = props;
-
-	const [image, setImage] = React.useState('');
+	const { id, jwtToken, advertId, image } = props;
 
 	const createImage = () => {
 		const blob = new Blob([new Uint8Array(base64ToArrayBuffer(image ?? ''))]) as BlobPart;

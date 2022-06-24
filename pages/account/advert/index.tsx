@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Head from 'next/head';
@@ -6,30 +7,100 @@ import Link from 'next/link';
 import Navbar from '../../../components/common/Navbar/Navbar';
 import AdvertImage from '../../../components/common/Advert/AdvertImage';
 import RecivedMessage from '../../../components/common/Message/RecivedMessage';
+import { AdvertDataProvider, iAdvert } from '../../../data/AdvertDataProvider';
+import DeleteModal from '../../../components/common/Modal/DeleteModal';
+import { getAreaName, getCategoryName } from '../../../components/Utils';
+import Loader from '../../../components/common/Loader/Loader';
 
 const UserAdvert: NextPage = () => {
-	const router = useRouter();
+	const router = useRouter()
+	const advertId: string = router.query.advertId as string;
+
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
-	return (
+	const [loader, setLoader] = React.useState(true);
+
+	const [advert, setAdvert] = React.useState<iAdvert>({
+		title: '',
+		description: '',
+		email: '',
+		phoneNumber: '',
+		price: '',
+		category: '',
+		area: '',
+		messagesNumber: '',
+		followNumber: '',
+		image: '',
+		advertMessages: [],
+	});
+
+	const [deleteModal, setDeleteModal] = React.useState(false);
+
+	useEffect(() => {
+		getAdvert();
+	}, []);
+
+	const getAdvert = () => {
+		return AdvertDataProvider.getUserAdvert(token!, id!, advertId)
+		.then((res) => {
+			if (typeof res === typeof advert) {
+				setAdvert(res as iAdvert);
+				setLoader(false);
+			}
+		})
+	}
+
+	const deleteAdvert = () => {
+		return AdvertDataProvider.deleteAdvert(token!, advertId);
+	}
+
+	const renderMessages = ( advert.advertMessages !== undefined ?
+		advert.advertMessages.map(message => (
+			<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
+				<RecivedMessage
+					advertId={message.advertId}
+					advertTitle={message.advertTitle}
+					senderId={message.senderId}
+					senderUsername={message.senderUsername}
+					messageId={message.messageId}
+					message={message.message}
+					date={message.date}
+				/>
+			</Grid>
+		)) :
+			{}
+	);
+
+	return loader ? (
 		<div>
 			<Head>
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
+			<Navbar jwtToken={token} id={id}/>
+			<Loader/>
+		</div>
+	) : (
+		<div>
+			<Head>
+				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
+				<link rel='icon' href='./favicon.ico' />
+			</Head>
+			<Navbar jwtToken={token} id={id}/>
 			<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' textAlign={'center'} sx={{mt: '200px'}}>
 				<Grid item xs={12} sm={10} md={6} sx={{mb: '20px'}}>
 					<AdvertImage
 						id={id}
 						jwtToken={token}
 						advertId={1}
+						image={advert.image}
 					/>
 					<Typography variant='subtitle1' fontSize={'18px'} sx={{textAlign:'center', width: '90%', mx: 'auto'}}>
 						{'Opis:'}
 					</Typography>
 					<Typography variant='body1' fontSize={'16px'} sx={{mb: '15px', textAlign:'left', width: '90%', mx: 'auto'}}>
-						{'Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata Sprzedam Passata'}
+						{advert.description}
 					</Typography>
 				</Grid>
 				<Grid item xs={12} sm={10} md={3}>
@@ -39,25 +110,25 @@ const UserAdvert: NextPage = () => {
 								{'Tytuł:'}
 							</Typography>
 							<Typography variant='subtitle1' fontSize={'18px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Sprzedam Passata Sprzedam Passata Sprzedam'}
+								{advert.title}
 							</Typography>
 							<hr style={{ width: '90%' }} />
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Katergoria: Elektronika'}
+								{'Katergoria: ' + getCategoryName(parseInt(advert.category!))}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Województwo: Śląskie'}
+								{'Województwo: ' + getAreaName(parseInt(advert.area!))}
 							</Typography>
 							<hr style={{ width: '90%' }} />
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Wiadomości: 0'}
+								{'Wiadomości: ' + advert.messagesNumber ?? 0}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Obserwowania: 0'}
+								{'Obserwowania: ' + advert.followNumber ?? 0}
 							</Typography>
 							<hr style={{ width: '90%', marginBottom: '15px' }} />
 						</Grid>
@@ -77,6 +148,7 @@ const UserAdvert: NextPage = () => {
 						</Grid>
 						<Grid item xs={12}>
 							<Button
+								onClick={() => setDeleteModal(true)}
 								sx={{pb:'5px', mb:'15px', width: '90%', color: "#fff",  backgroundColor: "#002f34", border: '1px solid #fff', '&:hover':{color: "#002f34", backgroundColor: "#f2f4f5", border: '1px solid #002f34'}}}
 							>
 								{'Usuń ogłoszenie'}
@@ -86,35 +158,24 @@ const UserAdvert: NextPage = () => {
 				</Grid>
 				<Grid item xs={12} sm={10}>
 					<hr style={{ width: '90%', marginBottom: '15px' }}/>
-					<Typography variant='subtitle1' fontSize={'20px'} sx={{mb:'20px', textAlign:'center', width: '90%', mx: 'auto'}}>
-								{'Wiadomości:'}
-					</Typography>
+					{advert.advertMessages !== undefined && advert.advertMessages.length > 0 &&
+						<Typography variant='subtitle1' fontSize={'20px'} sx={{mb:'20px', textAlign:'center', width: '90%', mx: 'auto'}}>
+									{'Wiadomości:'}
+						</Typography>
+					}
 				</Grid>
 			</Grid>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', backgroundColor: '#fff' }}>
-				<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
-					<RecivedMessage
-						advertId=''
-						advertTitle=''
-						senderId=''
-						senderUsername=''
-						messageId=''
-						message=''
-					/>
-					<hr style={{ width: '50%', marginBottom: '15px' }}/>
-				</Grid>
-				<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
-					<RecivedMessage
-						advertId=''
-						advertTitle=''
-						senderId=''
-						senderUsername=''
-						messageId=''
-						message=''
-					/>
-				</Grid>
+				{renderMessages}
 			</Box>
-			<Navbar jwtToken={token} id={id}/>
+			<DeleteModal
+				isModal={deleteModal}
+				url={'/account/announcements'}
+				modalOnChange={setDeleteModal}
+				onDeleteClick={deleteAdvert}
+				warningText={'Czy na pewno chcesz usunąć ogłoszenie?'}
+				deleteText={'Tak, usuń ogłoszenie'}
+			/>
 		</div>
 	)
 }

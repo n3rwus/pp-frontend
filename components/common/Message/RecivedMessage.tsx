@@ -4,18 +4,24 @@ import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Link from 'next/link';
 
-interface iRecivedMessage {
-	advertId: string;
-	advertTitle: string;
+export interface iRecivedMessage {
+	advertId?: string;
+	advertTitle?: string;
 	senderUsername: string;
-	senderId: string;
-	messageId: string;
-	message: string;
+	senderId?: string;
+	messageId?: string;
+	message?: string;
 	renderAdvert?: boolean;
+	date?: string;
 }
 
 const RecivedMessage = (props: iRecivedMessage) => {
-	const { advertId, advertTitle, senderUsername, senderId, messageId, message, renderAdvert } = props;
+	const { advertId, advertTitle, senderUsername, senderId, messageId, message, date, renderAdvert } = props;
+
+	const dateFromat = new Date(date!);
+	const formatedDate = () => {
+		return dateFromat.toLocaleDateString() + ' ' + dateFromat.toLocaleTimeString();
+	}
 
 	return (
 		<Grid item xs={6}>
@@ -29,7 +35,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
 					<Link href='/profile'>
 						<Typography variant="h5" component="div" textAlign={'center'}>
-							{'Od: Janusz'}
+							{'Od: ' + senderUsername}
 						</Typography>
 					</Link>
 				</Grid>
@@ -39,7 +45,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 						<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
 							<Link href='dupa'>
 								<Typography variant="h5" component="div" textAlign={'center'}>
-									{'Ogłoszenie: Kupno samochodu'}
+									{'Ogłoszenie: ' + advertTitle}
 								</Typography>
 							</Link>
 						</Grid>
@@ -48,7 +54,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 				}
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#f2f4f5', color: '#002f34'}}}>
 					<Typography variant="h5" component="div" textAlign={'center'} >
-						{'Wiadomość: Nie sprzedam Ci tego passata tak tanio, całe życie nim jeździłem'}
+						{'Wiadomość: ' + message}
 					</Typography>
 				</Grid>
 			</Card>

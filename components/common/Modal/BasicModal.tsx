@@ -65,7 +65,7 @@ export default function BasicModal(props: iBasicModal) {
 		 	<Button 
 		  		onClick={() => onExit()}
 				fullWidth
-				sx={{color: '#002f34', mt:'10px',  ':hover': {color: '#fff', backgroundColor: '#002f34'}}}
+				sx={{color: '#002f34', mt:'10px', border: '1px solid #002f34', ':hover': {color: '#fff', backgroundColor: '#002f34'}}}
 			>
 				{closeText ?? 'Close'}
 			</Button>

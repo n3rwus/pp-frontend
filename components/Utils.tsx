@@ -72,6 +72,26 @@ export const getCategoryKey = (name: string) => {
 	return categoryFound;
 }
 
+export const getCategoryName = (key: number) => {
+	let categoryFound = 'Wszystkie Kategorie';
+	Categories.forEach(category => {
+		if (category.key === key) {
+			categoryFound = category.name;
+		}
+	});
+	return categoryFound;
+}
+
+export const getAreaName = (key: number) => {
+	let areaFound = 'Cała Polska';
+	Areas.forEach(area => {
+		if (area.key === key) {
+			areaFound = area.name;
+		}
+	});
+	return areaFound;
+}
+
 export const getAreaKey = (name: string) => {
 	let areaFound = 0;
 	Areas.forEach(area => {
