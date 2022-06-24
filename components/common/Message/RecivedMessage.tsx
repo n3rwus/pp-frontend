@@ -28,7 +28,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 			<Card sx={{ maxWidth: '50%', mx: 'auto', mb: '30px', border: '2px solid #002f34' }}>
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#f2f4f5'}}}>
 					<Typography variant="h5" component="div" textAlign={'center'}>
-						{'Otrzymano: 21.05.2022 15:00'}
+						{'Otrzymano: ' + formatedDate()}
 					</Typography>
 				</Grid>
 				<hr style={{ margin: '0px' }} />
