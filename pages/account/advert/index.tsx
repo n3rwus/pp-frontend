@@ -120,20 +120,30 @@ const UserAdvert: NextPage = () => {
 								{advert.title}
 							</Typography>
 							<hr style={{ width: '90%' }} />
-							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Katergoria: ' + getCategoryName(parseInt(advert.category!))}
-							</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
 								{'Województwo: ' + getAreaName(parseInt(advert.area!))}
 							</Typography>
+							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
+								{'Katergoria: ' + getCategoryName(parseInt(advert.category!))}
+							</Typography>
+							{advert.email &&
+								<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
+									{'Adres Email: ' + advert.email}
+								</Typography>
+							}
+							{advert.phoneNumber &&
+								<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
+									{'Number Telefonu: ' + advert.phoneNumber}
+								</Typography>
+							}
 							<hr style={{ width: '90%' }} />
+						</Grid>
+						<Grid item xs={12}>
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
 								{'Wiadomości: ' + advert.messagesNumber ?? 0}
 							</Typography>
-						</Grid>
-						<Grid item xs={12}>
 							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
 								{'Obserwowania: ' + advert.followNumber ?? 0}
 							</Typography>
