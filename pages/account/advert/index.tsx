@@ -51,6 +51,13 @@ const UserAdvert: NextPage = () => {
 		})
 	}
 
+	const editAdvert = () => {
+		router.push({
+			pathname: '/account/advert/edit/', 
+			query: {advertId},
+		});
+	}
+
 	const deleteAdvert = () => {
 		return AdvertDataProvider.deleteAdvert(token!, advertId);
 	}
@@ -141,6 +148,7 @@ const UserAdvert: NextPage = () => {
 						</Grid>
 						<Grid item xs={12}>
 							<Button
+								onClick={editAdvert}
 								sx={{pb:'5px', mb:'15px', width: '90%', color: "#fff",  backgroundColor: "#002f34", border: '1px solid #fff', '&:hover':{color: "#002f34", backgroundColor: "#f2f4f5", border: '1px solid #002f34'}}}
 							>
 								{'Edytuj ogłoszenie'}

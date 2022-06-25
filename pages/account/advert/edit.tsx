@@ -1,26 +1,63 @@
 import { Box, Grid, TextField, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import Navbar from '../../components/common/Navbar/Navbar'
+import Navbar from '../../../components/common/Navbar/Navbar'
 import Head from 'next/head';
-import TextFieldIcon from '../../components/common/TextField/TextFieldIcon';
-import SearchComboBox from '../../components/common/Box/SearchComboBox';
-import { Areas, arrayBufferToBase64, Categories, getAreaKey, getCategoryKey } from '../../components/Utils';
-import ButtonUploadImage from '../../components/common/Button/ButtonUploadImage';
+import TextFieldIcon from '../../../components/common/TextField/TextFieldIcon';
+import SearchComboBox from '../../../components/common/Box/SearchComboBox';
+import { Areas, arrayBufferToBase64, Categories, createFile, getAreaKey, getAreaName, getCategoryKey, getCategoryName } from '../../../components/Utils';
+import ButtonUploadImage from '../../../components/common/Button/ButtonUploadImage';
 import React, { useEffect } from 'react';
-import CardUploadImage from '../../components/common/Cards/CardUploadImage';
-import ButtonSave from '../../components/common/Button/ButtonSave';
+import CardUploadImage from '../../../components/common/Cards/CardUploadImage';
+import ButtonSave from '../../../components/common/Button/ButtonSave';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useRouter } from 'next/router';
-import { AdvertDataProvider, NewAdvert } from '../../data/AdvertDataProvider';
-import BasicModal from '../../components/common/Modal/BasicModal';
-import { regexEmail, regexEmpty, regexPhoneNumber, regexPrice } from '../../components/Utils';
+import { AdvertDataProvider, iAdvert, NewAdvert } from '../../../data/AdvertDataProvider';
+import BasicModal from '../../../components/common/Modal/BasicModal';
+import { regexEmail, regexEmpty, regexPhoneNumber, regexPrice } from '../../../components/Utils';
+import Loader from '../../../components/common/Loader/Loader';
 
-const NewAnnouncement: NextPage = () => {
+const EditAdvert: NextPage = () => {
 	const router = useRouter();
 
 	//localStorage
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const advertId = router.query.advertId as string;
+
+	const LoadAdvert = () => {
+		return AdvertDataProvider.getUserAdvertEdit(token!, id!, advertId)
+		.then((advert) => {
+			let editedAdvert: iAdvert = {
+				title: '',
+				description: '',
+				email: '',
+				phoneNumber: '',
+				price: '',
+				image: '',
+				category: '',
+				area: '',
+			}
+
+			if (typeof advert === typeof editedAdvert) {
+				editedAdvert = advert as iAdvert;
+
+				setTitle(editedAdvert.title ?? '');
+				setPrice(editedAdvert.price ?? '');
+				setEmail(editedAdvert.email ?? '');
+				setPhoneNumber(editedAdvert.phoneNumber ?? '');
+				setCategory(editedAdvert.category ? getCategoryName(parseInt(editedAdvert.category)) : '');
+				setLocation(editedAdvert.area ? getAreaName(parseInt(editedAdvert.area)) : '');
+				setDescription(editedAdvert.description ?? '');
+				setImage(editedAdvert.image ?  createFile(editedAdvert.image) : undefined);
+				setLoader(false);
+			}
+		});
+	}
+
+	useEffect(() => {
+		LoadAdvert();
+	}, []);
 
 	//states
 	const [title, setTitle] = React.useState('');
@@ -34,6 +71,9 @@ const NewAnnouncement: NextPage = () => {
 
 	// modal
 	const [isModal, setModal] = React.useState(false);
+
+	// loader
+	const [loader, setLoader] = React.useState(true);
 
 	// status
 	const [status, setStatus] = React.useState(0);
@@ -66,7 +106,6 @@ const NewAnnouncement: NextPage = () => {
 		setPhoneNumberError(!regexPhoneNumber.test(phoneNumber));
 	}, [phoneNumber]);
 
-
 	// functions
 	const imageToArrayBuffer = async () => {
 		if(image) {
@@ -75,6 +114,8 @@ const NewAnnouncement: NextPage = () => {
 			return '';
 		}
 	}
+
+	//
 
 	const onSaveClick = () => {
 
@@ -88,11 +129,12 @@ const NewAnnouncement: NextPage = () => {
 			category: getCategoryKey(category),
 			area: getAreaKey(location),
 		}
+	
 		return imageToArrayBuffer()
 		.then(image => {
 			advertData.image = image;
 			console.log('Advert data: ' + advertData);
-			return AdvertDataProvider.addAdvert(advertData)
+			return AdvertDataProvider.editAdvert(advertData, advertId)
 			.then(res => {
 				console.log('Add advert status: [' + res + ']');
 				setModal(true);
@@ -101,7 +143,16 @@ const NewAnnouncement: NextPage = () => {
 		}) 
 	}
 
-	return (
+	return  loader ? (
+		<div>
+			<Head>
+				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
+				<link rel='icon' href='./favicon.ico' />
+			</Head>
+			<Navbar jwtToken={token} id={id}/>
+			<Loader/>
+		</div>
+	) : (
 		<div>
 			<Head>
 				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
@@ -119,7 +170,7 @@ const NewAnnouncement: NextPage = () => {
 						fontWeight={'500'}
 						color={'#002f34'}
 					>
-						{'Nowe ogłoszenie'}
+						{'Edycja ogłoszenia'}
 					</Typography>
 				</Grid>
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{py:'50px'}}>
@@ -192,13 +243,13 @@ const NewAnnouncement: NextPage = () => {
 						/>
 					</Grid>
 					<Grid item xs={9} sm={10} md={10} sx={{backgroundColor: '#fff', m:'15px', p: '0px !important'}}>
-						<ButtonUploadImage multiple={true} handleImages={setImage}/>
+						<ButtonUploadImage multiple={true} handleImages={setImage as React.Dispatch<React.SetStateAction<File | undefined>>}/>
 					</Grid>
 				</Grid>
 			</Box>
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', mt: '50px' }}>
 				<Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
-					{image && 
+					{image &&
 						<CardUploadImage image={image}/> 
 					}
 					<Grid item xs={9} sm={10} md={10} sx={{mx: 'auto', mb:'50px', p: '0px !important'}}>
@@ -214,12 +265,12 @@ const NewAnnouncement: NextPage = () => {
 				isModal={isModal}
 				modalOnChange={setModal}
 				status={status}
-				successText={'New advert successfully created'}
+				successText={'Advert successfully updated'}
 				errorText={'An error occured'}
-				closeText={status === 200 ? 'Go to your adverts' : 'Close'}
+				closeText={status === 200 ? 'Idź do swoich ogłoszeń' : 'Wróć'}
 			/>
 		</div>
 	)
 }
 
-export default NewAnnouncement;
+export default EditAdvert;

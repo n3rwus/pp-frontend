@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 interface iUploadImageButton {
 	multiple: boolean;
-	handleImages: Dispatch<SetStateAction<FileList | undefined>>;
+	handleImages: Dispatch<SetStateAction<File | undefined>>;
 }
 
 const Input = styled('input')({
@@ -23,7 +23,7 @@ const ButtonUploadImage = (props: iUploadImageButton) => {
 					multiple={multiple}
 					type="file"
 					onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-						handleImages(event.target.files ?? undefined);
+						handleImages(event.target && event.target.files ? event.target.files[0] : undefined);
 					}}
 					onClick={event => {
 						handleImages(undefined);
@@ -31,7 +31,7 @@ const ButtonUploadImage = (props: iUploadImageButton) => {
 					
 				/>
 				<Button variant="contained" component="span" fullWidth sx={{ height: '56px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#7f9799'}}}>
-					{'Dodaj zdjęcia'}
+					{'Dodaj zdjęcie'}
 				</Button>
 			</label>
 		</React.Fragment>

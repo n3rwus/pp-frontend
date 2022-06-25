@@ -7,19 +7,18 @@ import { Grid } from '@mui/material';
 
 interface iUploadImageButton {
 	image: File;
-	index: number;
 }
 
 const CardUploadImage = (props: iUploadImageButton) => {
-	const { image, index } = props;
+	const { image } = props;
 
 	return (
-		<Grid item xs={12} sm={6} md={3}>
-			<Card sx={{ maxWidth: 345, mx: 'auto', mb: '30px' }}>
-				<CardMedia component="img" height="240" image={URL.createObjectURL(image)} alt="photo" />
+		<Grid item xs={12}>
+			<Card sx={{ maxWidth: 600, mx: 'auto', mb: '30px' }}>
+				<CardMedia component="img" height="350" image={URL.createObjectURL(image)} alt="photo" />
 				<CardContent>
 					<Typography variant="h5" component="div" textAlign={'center'}>
-						{index + 1}
+						{'Twoje nowe zdjęcie'}
 					</Typography>
 				</CardContent>
 			</Card>

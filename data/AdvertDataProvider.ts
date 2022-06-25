@@ -67,6 +67,38 @@ export class AdvertDataProvider {
 		});
 	}
 
+	public static editAdvert(data: NewAdvert, advertId: string) {
+		let status = 0;
+		console.log(data);
+		return axios.put(`http://localhost:4000/adverts/` + advertId, {
+			Title: data.title,
+			Description: data.description,
+			Price: data.price,
+			Mail: data.email,
+			PhoneNumber: data.phoneNumber,
+			Image: data.image,
+			Category: data.category,
+			Area: data.area,
+		}, {
+			headers: {
+				'Authorization': 'Bearer ' + data.jwtToken,
+				'Accept' : 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			console.log(res);
+			console.log(res.data);
+			status = res.status;
+			return status;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				status = error.response!.status;
+			}
+			return status;
+		});
+	}
+
 	public static getUserAdverts(jwtToken: string, id: string) {
 		let status = 0;
 		return axios.get(`http://localhost:4000/adverts/user/` + id, {
@@ -137,6 +169,37 @@ export class AdvertDataProvider {
 			});
 
 			advert.advertMessages = messages;
+			console.log(advert);
+			return advert;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				status = error.response!.status;
+			}
+			return status;
+		});
+	}
+
+	public static getUserAdvertEdit(jwtToken: string, id: string, advertId: string) {
+		let status = 0;
+		return axios.get(`http://localhost:4000/adverts/` + advertId, {
+			headers: {
+				'Authorization': 'Bearer ' + jwtToken,
+				'Accept' : 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			const data = res.data;
+			const advert: iAdvert = {
+				title: data.title,
+				description: data.description,
+				email: data.mail,
+				phoneNumber: data.phoneNumber,
+				price: data.price,
+				image: data.image,
+				category: data.category,
+				area: data.area,
+			}
 			console.log(advert);
 			return advert;
 		}).catch(error => {
