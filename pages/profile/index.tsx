@@ -47,6 +47,7 @@ const Home: NextPage = () => {
 				title={advert.title}
 				price={advert.price}
 				image={advert.image}
+				path={'/advert/'}
 			/>
 		</Grid>
 		)) :
