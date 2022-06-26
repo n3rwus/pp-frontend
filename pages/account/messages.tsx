@@ -28,7 +28,7 @@ const Messages: NextPage = () => {
 		})
 	}
 
-	const renderMessages = ( messages !== undefined ?
+	const renderMessages = (
 		messages.map(message => (
 			<Grid item xs={4} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 				<RecivedMessage
@@ -43,8 +43,7 @@ const Messages: NextPage = () => {
 					renderDefaultText={true}
 				/>
 			</Grid>
-		)) :
-			{}
+		))
 	);
 
 	return (
