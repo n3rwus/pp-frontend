@@ -72,6 +72,26 @@ export const getCategoryKey = (name: string) => {
 	return categoryFound;
 }
 
+export const getCategoryName = (key: number) => {
+	let categoryFound = 'Wszystkie Kategorie';
+	Categories.forEach(category => {
+		if (category.key === key) {
+			categoryFound = category.name;
+		}
+	});
+	return categoryFound;
+}
+
+export const getAreaName = (key: number) => {
+	let areaFound = 'Cała Polska';
+	Areas.forEach(area => {
+		if (area.key === key) {
+			areaFound = area.name;
+		}
+	});
+	return areaFound;
+}
+
 export const getAreaKey = (name: string) => {
 	let areaFound = 0;
 	Areas.forEach(area => {
@@ -112,3 +132,21 @@ export function base64ToArrayBuffer(base64: string) {
 
 // Empty image
 export const NO_IMAGE = "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png";
+
+// Create Image from string
+export const createImage = (image: string) => {
+	const blob = new Blob([new Uint8Array(base64ToArrayBuffer(image ?? ''))]) as BlobPart;
+	const blobPart: BlobPart[] = [];
+	blobPart.push(blob);
+	const fileImg: File = new File(blobPart , 'image.png');
+	return URL.createObjectURL(fileImg);
+}
+
+// Create file from string
+export const createFile = (image: string) => {
+	const blob = new Blob([new Uint8Array(base64ToArrayBuffer(image ?? ''))]) as BlobPart;
+	const blobPart: BlobPart[] = [];
+	blobPart.push(blob);
+	const fileImg: File = new File(blobPart , 'image.png');
+	return fileImg;
+}

@@ -11,6 +11,7 @@ interface ButtonTextIconProps extends StylesProps {
 	text?: string;
 	endIcon?: React.ReactElement;
 	startIcon?: React.ReactElement;
+	onClick?: () => void;
 }
 
 const styles = (theme: any, props: StylesProps) => ({
@@ -36,8 +37,13 @@ const styles = (theme: any, props: StylesProps) => ({
 export default function ButtonTextIcon(props: ButtonTextIconProps) {
 	const theme = useTheme();
 
+	const {
+		onClick,
+	} = props;
+
 	return (
 		<Button
+			onClick={onClick}
 			startIcon={props.startIcon}
 			endIcon={props.endIcon}
 			fullWidth

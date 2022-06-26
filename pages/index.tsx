@@ -13,7 +13,7 @@ import DirectionsCarFilledRoundedIcon from '@mui/icons-material/DirectionsCarFil
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ImportantDevicesRoundedIcon from '@mui/icons-material/ImportantDevicesRounded';
 import AssignmentIndRoundedIcon from '@mui/icons-material/AssignmentIndRounded';
-import { Areas } from '../components/Utils';
+import { Areas, getAreaKey } from '../components/Utils';
 import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
@@ -24,10 +24,18 @@ const Home: NextPage = () => {
 	const [searchText, setSearchText] = React.useState('');
 	const [location, setLocation] = React.useState('');
 
+	const onSearchClick = () => {
+		if (searchText === '') {
+			router.push({pathname: '/area/', query: {areaId: getAreaKey(location)}});
+		} else {
+			router.push({pathname: '/text/', query: {searchText}});
+		}
+	}
+
 	return (
 		<div>
 			<Head>
-				<title>{'Ogłoszenia - Sprzedam, kupię na ZMITAC.pl'}</title>
+				<title>{'Ogłoszenia - Sprzedam, kupię na OLX.pl'}</title>
 				<link rel='icon' href='./favicon.ico' />
 			</Head>
 			<style jsx global>{`
@@ -71,6 +79,7 @@ const Home: NextPage = () => {
 										text={'Szukaj'}
 										endIcon={<SearchIcon />}
 										topBorder={1}
+										onClick={onSearchClick}
 									/>
 								</Grid>
 							</Grid>
@@ -91,6 +100,7 @@ const Home: NextPage = () => {
 								icon={<DirectionsCarFilledRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ffce32'}
 								text={'Motoryzacja'}
+								categoryId={'1'}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
@@ -98,6 +108,7 @@ const Home: NextPage = () => {
 								icon={<ImportantDevicesRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ceddff'}
 								text={'Elektronika'}
+								categoryId={'2'}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
@@ -105,6 +116,7 @@ const Home: NextPage = () => {
 								icon={<AssignmentIndRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#23e5db'}
 								text={'Praca'}
+								categoryId={'3'}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6} md={3} sx={{ my: '30px', textAlign: 'center' }}>
@@ -112,6 +124,7 @@ const Home: NextPage = () => {
 								icon={<HomeRoundedIcon fontSize='large' htmlColor='#676869' sx={{ mt: '10px' }} />}
 								iconBackgroundColor={'#ffd6c9'}
 								text={'Dom'}
+								categoryId={'4'}
 							/>
 						</Grid>
 					</Grid>
@@ -128,15 +141,15 @@ const Home: NextPage = () => {
 						{'Wyróżniaj swoje ogłoszenia!'}
 					</Typography>
 					<Typography variant='h4' component='h4' pb={'50px'} textAlign='center' fontSize={'28px'} fontWeight={'500'} color='#fff'>
-						{'Znajdź czego szukasz na ZMITAC!'}
+						{'Znajdź czego szukasz na OLX!'}
 					</Typography>
 				</Grid>
 				<Grid item xs={12} sx={{ backgroundColor: '#cbf7ee' }}>
 					<Typography variant='h5' component='h5' pt={'50px'} py={'20px'} textAlign='center' fontSize={'30px'} fontWeight={'500'} color='#002f34'>
-						{'ZMITAC ©'}
+						{'OLX ©'}
 					</Typography>
 					<Typography variant='h4' component='h4' mx={'20%'} pb={'50px'} textAlign='center' fontSize={'16px'} fontWeight={'500'} color='#002f34'>
-						{'ZMITAC.pl to darmowe ogłoszenia lokalne w kategoriach: Motoryzacja, Elektronika, Praca, Dom. Szybko znajdziesz tu ciekawe ogłoszenia i łatwo skontaktujesz się z ogłoszeniodawcą. Na ZMITAC.pl czeka na Ciebie praca biurowa, mieszkania, pokoje, samochody. Jeśli chcesz coś sprzedać - w prosty sposób dodasz bezpłatne ogłoszenia. Chcesz coś kupić - tutaj znajdziesz ciekawe okazje, taniej niż w sklepie. Sprzedawaj po sąsiedzku na ZMITAC.pl '}
+						{'OLX.pl to darmowe ogłoszenia lokalne w kategoriach: Motoryzacja, Elektronika, Praca, Dom. Szybko znajdziesz tu ciekawe ogłoszenia i łatwo skontaktujesz się z ogłoszeniodawcą. Na OLX.pl czeka na Ciebie praca biurowa, mieszkania, pokoje, samochody. Jeśli chcesz coś sprzedać - w prosty sposób dodasz bezpłatne ogłoszenia. Chcesz coś kupić - tutaj znajdziesz ciekawe okazje, taniej niż w sklepie. Sprzedawaj po sąsiedzku na OLX.pl '}
 					</Typography>
 				</Grid>
 				{/* Footer */}

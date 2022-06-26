@@ -1,7 +1,6 @@
 import { Box, Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Typography } from '@mui/material';
 import React from 'react';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
 import Navbar from '../../components/common/Navbar/Navbar';
 import { useRouter } from 'next/router';
 
@@ -10,8 +9,6 @@ interface iSettings {
 }
 
 const Settings = (props: iSettings) => {
-	const [email, changeEmail] = React.useState('');
-
 	const router = useRouter();
 
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
@@ -32,29 +29,11 @@ const Settings = (props: iSettings) => {
 					</Grid>
 					<Grid item xs={12}>
 						<Typography component="h1" variant="h5" sx={{color: '#002f34'}}>
-							{'User\'s settings'}
+							{'Ustawienia'}
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<hr style={{ color: '#002f34' }} />
-					</Grid>
-					<Grid item xs={12} textAlign='center'>
-						<FormControl variant="outlined" sx={{width: '330px'}}>
-							<InputLabel>Email</InputLabel>
-							<OutlinedInput
-								disabled
-								id="outlined-adornment-email"
-								value={email}
-								endAdornment={
-								<InputAdornment position="end">
-									<IconButton edge="end">
-										<AlternateEmailRoundedIcon />
-									</IconButton>
-								</InputAdornment>
-								}
-								label="Email"
-							/>
-						</FormControl>
 					</Grid>
 					<Grid item xs={12}>
 						<Button  variant="contained" sx={{height: '56px', width: '330px', backgroundColor: '#002f34', ":hover": {backgroundColor: '#e0e0e0', color: '#002f34'}}}>

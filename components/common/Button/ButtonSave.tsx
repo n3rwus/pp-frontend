@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 interface iButtonSave {
 	disabled?: boolean;
-	logText?: string;
+	text?: string;
 	onSaveClick: () => Promise<void>;
 }
 const Input = styled('input')({
@@ -12,11 +12,7 @@ const Input = styled('input')({
 });
 
 const ButtonSave = (props: iButtonSave) => {
-	const { disabled, onSaveClick } = props;
-
-	const onClick = () => {
-		console.log(props.logText);
-	}
+	const { text, disabled, onSaveClick } = props;
 
 	return (
 		<React.Fragment>
@@ -28,7 +24,7 @@ const ButtonSave = (props: iButtonSave) => {
 				fullWidth
 				onClick={onSaveClick}
 			>
-				{'Zapisz ogłoszenie'}
+				{text ?? 'Zapisz ogłoszenie'}
 			</Button>
 		</React.Fragment>
 	);

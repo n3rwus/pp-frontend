@@ -1,14 +1,21 @@
 import { Button, Grid, Paper } from "@mui/material";
+import Link from "next/link";
 
 
 interface ButtonCategoryProps {
     icon: React.ReactElement;
     iconBackgroundColor: string;
     text: string;
+    categoryId: string;
 }
 
 export default function ButtonCategory(props: ButtonCategoryProps) {
+    const {
+        categoryId,
+    } = props;
+
 	return (
+        <Link href={{pathname:'/category/', query:{categoryId}}}>
 		<Button>   
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center'>
                 <Grid item>
@@ -21,5 +28,6 @@ export default function ButtonCategory(props: ButtonCategoryProps) {
                 </Grid>
             </Grid>
 		</Button>
+        </Link>
 	);
 }

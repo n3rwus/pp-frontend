@@ -61,8 +61,24 @@ const Announcements: NextPage = () => {
 					<Typography variant='h4' component='h4' py={'50px'} textAlign='center' fontSize={'32px'} fontWeight={'500'} color='#002f34'>
 						{'Twoje Ogłoszenia'}
 					</Typography>
+					<hr />
 				</Grid>
-				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{pt:'50px'}}>
+			</Box>
+			<Box sx={{ flexGrow: 1, width: '80%', mx: 'auto', backgroundColor: '#fff' }}>
+				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{pt:'50px'}}>
+						{renderSimplyAdverts}
+					<Grid item xs={12} minHeight={'200px'}>
+					</Grid>
+				</Grid>
+			</Box>
+		</div>
+	)
+}
+
+export default Announcements;
+
+/*
+<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{pt:'50px'}}>
 					<Grid item xs={9} sm={10} md={3} sx={{backgroundColor: '#fff', m:'5px'}}>
 						<TextFieldIcon
 							icon={<SearchIcon sx={{ color: '#002f34'}} />}
@@ -97,13 +113,5 @@ const Announcements: NextPage = () => {
 					<Grid item xs={12} sx={{ m:'5px'}}>
 						<hr />
 					</Grid>
-						{renderSimplyAdverts}
-					<Grid item xs={12} minHeight={'200px'}>
-					</Grid>
 				</Grid>
-			</Box>
-		</div>
-	)
-}
-
-export default Announcements;
+*/

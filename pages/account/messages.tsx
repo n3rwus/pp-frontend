@@ -3,12 +3,49 @@ import type { NextPage } from 'next'
 import Navbar from '../../components/common/Navbar/Navbar'
 import Head from 'next/head';
 import { useRouter } from "next/router"
-import RecivedMessage from '../../components/common/Message/RecivedMessage';
+import RecivedMessage, { iRecivedMessage } from '../../components/common/Message/RecivedMessage';
+import { useEffect } from 'react';
+import { MessageDataProvider } from '../../data/MessageDataProvider';
+import React from 'react';
 
 const Messages: NextPage = () => {
 	const router = useRouter();
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const [messages, setMessages] = React.useState<iRecivedMessage[]>([]);
+
+	useEffect(() => {
+		loadMessages();
+	}, []);
+
+	const loadMessages = () => {
+		return MessageDataProvider.getUserMessages(id!, token!)
+		.then(res => {
+			if ( typeof res === typeof messages) {
+				setMessages(res as iRecivedMessage[]);
+			}
+		})
+	}
+
+	const renderMessages = ( messages !== undefined ?
+		messages.map(message => (
+			<Grid item xs={4} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
+				<RecivedMessage
+					advertId={message.advertId}
+					advertTitle={message.advertTitle}
+					senderId={message.senderId}
+					senderUsername={message.senderUsername}
+					messageId={message.messageId}
+					message={message.message}
+					date={message.date}
+					renderAdvert={true}
+					renderDefaultText={true}
+				/>
+			</Grid>
+		)) :
+			{}
+	);
 
 	return (
 		<div>
@@ -23,28 +60,8 @@ const Messages: NextPage = () => {
 						{'Twoje Wiadomości'}
 					</Typography>
 				</Grid>
-				<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
-					<RecivedMessage
-						advertId=''
-						advertTitle=''
-						senderId=''
-						senderUsername=''
-						messageId=''
-						message=''
-					/>
-				</Grid>
-				<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
-					<RecivedMessage
-						advertId=''
-						advertTitle=''
-						senderId=''
-						senderUsername=''
-						messageId=''
-						message=''
-					/>
-				</Grid>
+				{renderMessages}
 				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent='center' sx={{py:'50px'}}>
-
 				</Grid>
 			</Box>
 		</div>
