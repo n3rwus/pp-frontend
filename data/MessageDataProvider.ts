@@ -44,7 +44,7 @@ export class MessageDataProvider {
 			const messages: iRecivedMessage[] = [];
 			res.data.$values.forEach((message: {
 				advertId: string | undefined; advertTitle: any ;id: any; text: any, creationTime: any; userSenderId: any; userSenderName: any }) => {
-				if (message.userSenderId == id) {
+				if (message.userSenderId != id) {
 					const receivedMessage: iRecivedMessage = {
 						advertId: message.advertId,
 						advertTitle: message.advertTitle,
