@@ -4,24 +4,31 @@ import type { NextPage } from 'next'
 import Head from 'next/head';
 import { useRouter } from "next/router"
 import Link from 'next/link';
-import Navbar from '../../../components/common/Navbar/Navbar';
-import AdvertImage from '../../../components/common/Advert/AdvertImage';
-import RecivedMessage from '../../../components/common/Message/RecivedMessage';
-import { AdvertDataProvider, iAdvert } from '../../../data/AdvertDataProvider';
-import DeleteModal from '../../../components/common/Modal/DeleteModal';
-import { getAreaName, getCategoryName } from '../../../components/Utils';
-import Loader from '../../../components/common/Loader/Loader';
+import Navbar from '../components/common/Navbar/Navbar';
+import AdvertImage from '../components/common/Advert/AdvertImage';
+import RecivedMessage from '../components/common/Message/RecivedMessage';
+import { AdvertDataProvider, iAdvert } from '../data/AdvertDataProvider';
+import { getAreaName, getCategoryName, regexEmpty } from '../components/Utils';
+import Loader from '../components/common/Loader/Loader';
+import TextFieldIcon from '../components/common/TextField/TextFieldIcon';
+import ButtonSave from '../components/common/Button/ButtonSave';
+import { MessageDataProvider } from '../data/MessageDataProvider';
+import BasicModal from '../components/common/Modal/BasicModal';
+import AddModal from '../components/common/Modal/AddModal';
 
-const UserAdvert: NextPage = () => {
-	const router = useRouter()
+const Advert: NextPage = () => {
+	const router = useRouter();
+
 	const advertId: string = router.query.advertId as string;
 
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
 
 	const [loader, setLoader] = React.useState(true);
-
+	const [modal, setModal] = React.useState(false);
+	const [newMessage, setNewMessage] = React.useState('');
 	const [advert, setAdvert] = React.useState<iAdvert>({
+		userId: '',
 		title: '',
 		description: '',
 		email: '',
@@ -35,11 +42,17 @@ const UserAdvert: NextPage = () => {
 		advertMessages: [],
 	});
 
-	const [deleteModal, setDeleteModal] = React.useState(false);
-
 	useEffect(() => {
 		getAdvert();
 	}, []);
+
+	// errors
+	const [newMessageError, setNewMessageError] = React.useState(true);
+
+	// validation
+	useEffect(() => {
+		setNewMessageError(!regexEmpty.test(newMessage));
+	}, [newMessage]);
 
 	const getAdvert = () => {
 		return AdvertDataProvider.getUserAdvert(token!, id!, advertId)
@@ -51,21 +64,15 @@ const UserAdvert: NextPage = () => {
 		})
 	}
 
-	const editAdvert = () => {
-		router.push({
-			pathname: '/account/advert/edit/', 
-			query: {advertId},
-		});
-	}
-
-	const deleteAdvert = () => {
-		return AdvertDataProvider.deleteAdvert(token!, advertId);
+	const sendMessage = () => {
+		return MessageDataProvider.createMessage(id!, token!, advert.userId!, newMessage!, advertId!);
 	}
 
 	const renderMessages = ( advert.advertMessages !== undefined ?
-		advert.advertMessages.map(message => (
-			<Grid item xs={5} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
+		advert.advertMessages.map((message, index) => (
+			<Grid item xs={6} mt={'30px'} sx={{ backgroundColor: '#fff' }} justifyContent='center'>
 				<RecivedMessage
+					key={index}
 					advertId={message.advertId}
 					advertTitle={message.advertTitle}
 					senderId={message.senderId}
@@ -73,7 +80,7 @@ const UserAdvert: NextPage = () => {
 					messageId={message.messageId}
 					message={message.message}
 					date={message.date}
-					renderDefaultText={true}
+					renderDefaultText={false}
 				/>
 			</Grid>
 		)) :
@@ -139,44 +146,35 @@ const UserAdvert: NextPage = () => {
 									{'Number Telefonu: ' + advert.phoneNumber}
 								</Typography>
 							}
-							<hr style={{ width: '90%' }} />
-						</Grid>
-						<Grid item xs={12}>
-							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Wiadomości: ' + advert.messagesNumber ?? 0}
-							</Typography>
-							<Typography variant='subtitle2' fontSize={'16px'} sx={{mb: '10px', textAlign:'left', width: '90%', mx: 'auto'}}>
-								{'Obserwowania: ' + advert.followNumber ?? 0}
-							</Typography>
-							<hr style={{ width: '90%', marginBottom: '15px' }} />
-						</Grid>
-						<Grid item xs={12}>
-							<Link href={{pathname: '/advert/', query: {advertId}}}>
-								<Button
-									sx={{pb:'5px', mb:'15px', width: '90%', color: "#fff",  backgroundColor: "#002f34", border: '1px solid #fff', '&:hover':{color: "#002f34", backgroundColor: "#f2f4f5", border: '1px solid #002f34'}}}
-								>
-									{'Idź do ogłoszenia'}
-								</Button>
-							</Link>
-						</Grid>
-						<Grid item xs={12}>
-							<Button
-								onClick={editAdvert}
-								sx={{pb:'5px', mb:'15px', width: '90%', color: "#fff",  backgroundColor: "#002f34", border: '1px solid #fff', '&:hover':{color: "#002f34", backgroundColor: "#f2f4f5", border: '1px solid #002f34'}}}
-							>
-								{'Edytuj ogłoszenie'}
-							</Button>
-						</Grid>
-						<Grid item xs={12}>
-							<Button
-								onClick={() => setDeleteModal(true)}
-								sx={{pb:'5px', mb:'15px', width: '90%', color: "#fff",  backgroundColor: "#002f34", border: '1px solid #fff', '&:hover':{color: "#002f34", backgroundColor: "#f2f4f5", border: '1px solid #002f34'}}}
-							>
-								{'Usuń ogłoszenie'}
-							</Button>
 						</Grid>
 					</Grid>
 				</Grid>
+				{token && id &&
+					<Grid item xs={12} sm={10}>
+						<hr style={{ width: '90%', marginBottom: '15px' }}/>
+					</Grid>
+				}
+				{token && id &&
+					<Grid item xs={10} sm={4}>
+						<TextFieldIcon
+							placeholder={'Tu napisz wiadomość...'}
+							value={newMessage}
+							onChange={setNewMessage}
+							error={false}
+						/>
+					</Grid>
+				}
+				{token && id &&
+					<Grid item xs={10} sm={4}>
+						<Button
+							onClick={() => setModal(true)}
+							disabled={newMessageError}
+							sx={{pb:'5px', my:'15px', mx: 'auto', width: '90%', color: "#000",  backgroundColor: "#f2f4f5", border: '1px solid #fff', '&:hover':{color: "#fff", backgroundColor: "#002f34", border: '1px solid #002f34'}}}
+						>
+							{'Wyślij Wiadomość'}
+						</Button>
+					</Grid>
+				}
 				<Grid item xs={12} sm={10}>
 					<hr style={{ width: '90%', marginBottom: '15px' }}/>
 					{advert.advertMessages !== undefined && advert.advertMessages.length > 0 &&
@@ -189,16 +187,18 @@ const UserAdvert: NextPage = () => {
 			<Box sx={{ flexGrow: 1, width: '100%', mx: 'auto', backgroundColor: '#fff' }}>
 				{renderMessages}
 			</Box>
-			<DeleteModal
-				isModal={deleteModal}
-				url={'/account/announcements'}
-				modalOnChange={setDeleteModal}
-				onDeleteClick={deleteAdvert}
-				warningText={'Czy na pewno chcesz usunąć ogłoszenie?'}
-				deleteText={'Tak, usuń ogłoszenie'}
+			<AddModal
+				isModal={modal}
+				onAddClick={sendMessage}
+				modalOnChange={setModal}
+				url={'/loading'}
+				queryText={'advertId'}
+				queryValue={advertId}
+				warningText={'Czy na pewno chcesz wysłać wiadomość?'}
+				addText={'Tak, na pewno'}
 			/>
 		</div>
 	)
 }
 
-export default UserAdvert;
+export default Advert;

@@ -45,8 +45,7 @@ export class AuthenticationDataProvider {
 		}, {
 			headers: {
 			"withCredentials": true
-		}
-		}).then(res => {
+		}}).then(res => {
 			data.jwtToken = res.data.jwtToken;
 			data.id = res.data.id;
 			console.log(res.headers);
@@ -55,7 +54,6 @@ export class AuthenticationDataProvider {
 		}).catch(error => {
 			if (error.response) {
 				console.log(error.response!.status);
-
 				data.error = error.response!.status;
 			}
 			return data;

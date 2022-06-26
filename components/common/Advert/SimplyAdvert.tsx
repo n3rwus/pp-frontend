@@ -9,7 +9,7 @@ import { base64ToArrayBuffer } from '../../Utils';
 import Link from 'next/link';
 
 const SimplyAdvert = (props: iSimplyAdvert) => {
-	const { advertId, image, title, price } = props;
+	const { advertId, image, title, price, path } = props;
 	
 	const createImage = () => {
 		const blob = new Blob([new Uint8Array(base64ToArrayBuffer(image ?? ''))]) as BlobPart;
@@ -20,7 +20,7 @@ const SimplyAdvert = (props: iSimplyAdvert) => {
 	}
 
 	return (
-		<Link href={{pathname: '/account/advert/', query:{advertId: advertId}}}>
+		<Link href={{pathname: path ?? '/account/advert/', query:{advertId: advertId}}}>
 			<Card sx={{ maxWidth: 380, mx:'auto', border: 'solid 1px #fff', ':hover': {border: 'solid 1px #002f34'}}}>
 				<CardMedia
 					component="img"

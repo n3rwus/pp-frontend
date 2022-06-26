@@ -13,10 +13,11 @@ export interface iRecivedMessage {
 	message?: string;
 	renderAdvert?: boolean;
 	date?: string;
+	renderDefaultText?: boolean;
 }
 
 const RecivedMessage = (props: iRecivedMessage) => {
-	const { advertId, advertTitle, senderUsername, senderId, messageId, message, date, renderAdvert } = props;
+	const { advertId, advertTitle, senderUsername, senderId, messageId, message, date, renderAdvert, renderDefaultText } = props;
 
 	const dateFromat = new Date(date!);
 	const formatedDate = () => {
@@ -27,24 +28,40 @@ const RecivedMessage = (props: iRecivedMessage) => {
 		<Grid item xs={6}>
 			<Card sx={{ maxWidth: '50%', mx: 'auto', mb: '30px', border: '2px solid #002f34' }}>
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#f2f4f5'}}}>
-					<Typography variant="h5" component="div" textAlign={'center'}>
-						{'Otrzymano: ' + formatedDate()}
-					</Typography>
+					{renderDefaultText === true &&
+						<Typography fontSize={'18px'} variant="h5" color={'text.secondary'} component="div" textAlign={'center'}>
+							{'Otrzymano: ' + formatedDate()}
+						</Typography>
+					}
+					{renderDefaultText !== true &&
+						<Typography fontSize={'18px'} variant="h5" color={'text.secondary'} component="div" textAlign={'center'}>
+							{formatedDate()}
+						</Typography>
+					}
 				</Grid>
 				<hr style={{ margin: '0px' }} />
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
-					<Link href='/profile'>
-						<Typography variant="h5" component="div" textAlign={'center'}>
-							{'Od: ' + senderUsername}
-						</Typography>
-					</Link>
+					{renderDefaultText === true &&
+						<Link href={{pathname:'/profile/', query: {senderId}}}>
+							<Typography  fontSize={'20px'} variant="h5" component="div" textAlign={'center'}>
+								{'Od: ' + senderUsername}
+							</Typography>
+						</Link>
+					}
+					{renderDefaultText !== true &&
+						<Link href={{pathname:'/profile/', query: {senderId}}}>
+							<Typography  fontSize={'20px'} variant="h5" component="div" textAlign={'center'}>
+								{'Użytkownik: ' + senderUsername}
+							</Typography>
+						</Link>
+					}
 				</Grid>
 				<hr style={{ margin: '0px' }} />
 				{renderAdvert &&
 					<div>
 						<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#002f34', color: '#fff'}}}>
-							<Link href='dupa'>
-								<Typography variant="h5" component="div" textAlign={'center'}>
+							<Link href={{pathname:'/advert/', query: {advertId}}}>
+								<Typography  fontSize={'20px'} variant="h5" component="div" textAlign={'center'}>
 									{'Ogłoszenie: ' + advertTitle}
 								</Typography>
 							</Link>
@@ -53,7 +70,7 @@ const RecivedMessage = (props: iRecivedMessage) => {
 					</div>
 				}
 				<Grid item xs={6} sx={{py: '2px', ":hover": {backgroundColor: '#f2f4f5', color: '#002f34'}}}>
-					<Typography variant="h5" component="div" textAlign={'center'} >
+					<Typography fontSize={'18px'} variant="h5" component="div" textAlign={'center'} >
 						{'Wiadomość: ' + message}
 					</Typography>
 				</Grid>

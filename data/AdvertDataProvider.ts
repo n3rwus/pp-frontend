@@ -1,4 +1,3 @@
-import { Description } from '@mui/icons-material';
 import axios from 'axios';
 import { iRecivedMessage } from '../components/common/Message/RecivedMessage';
 
@@ -21,9 +20,11 @@ export interface iSimplyAdvert {
 	image?: string;
 	title?: string;
 	price?: string;
+	path?: string;
 }
 
 export interface iAdvert extends iSimplyAdvert { 
+	userId?: string;
 	category?: string;
 	area?: string;
 	email?: string;
@@ -151,6 +152,7 @@ export class AdvertDataProvider {
 				followNumber: data.usersWatchingNumber,
 				messagesNumber: data.messagesNumber,
 				advertMessages: [],
+				userId: data.userOwnerId,
 			}
 	
 			const messages: iRecivedMessage[] = [];
@@ -202,6 +204,78 @@ export class AdvertDataProvider {
 			}
 			console.log(advert);
 			return advert;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				status = error.response!.status;
+			}
+			return status;
+		});
+	}
+
+	public static getCategoryAdverts(categoryId: string) {
+		let status = 0;
+		return axios.get(`http://localhost:4000/adverts/category/` + categoryId)
+		.then(res => {
+			const formattedSimplyAdverts: iSimplyAdvert[] = [];
+			res.data.$values.forEach((advert: { id: any; image: any; title: any; price: any; }) => {
+				const simplyAdvert: iSimplyAdvert = {
+					advertId: advert.id,
+					image: advert.image,
+					title: advert.title,
+					price: advert.price,
+				}
+				formattedSimplyAdverts.push(simplyAdvert);
+			})
+			return formattedSimplyAdverts;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				status = error.response!.status;
+			}
+			return status;
+		});
+	}
+
+	public static getAreaAdverts(areaId: string) {
+		let status = 0;
+		return axios.get(`http://localhost:4000/adverts/area/` + areaId)
+		.then(res => {
+			const formattedSimplyAdverts: iSimplyAdvert[] = [];
+			res.data.$values.forEach((advert: { id: any; image: any; title: any; price: any; }) => {
+				const simplyAdvert: iSimplyAdvert = {
+					advertId: advert.id,
+					image: advert.image,
+					title: advert.title,
+					price: advert.price,
+				}
+				formattedSimplyAdverts.push(simplyAdvert);
+			})
+			return formattedSimplyAdverts;
+		}).catch(error => {
+			if (error.response) {
+				console.log(error.response!.status);
+				status = error.response!.status;
+			}
+			return status;
+		});
+	}
+
+	public static getTextAdverts(text: string) {
+		let status = 0;
+		return axios.get(`http://localhost:4000/adverts/text/` + text)
+		.then(res => {
+			const formattedSimplyAdverts: iSimplyAdvert[] = [];
+			res.data.$values.forEach((advert: { id: any; image: any; title: any; price: any; }) => {
+				const simplyAdvert: iSimplyAdvert = {
+					advertId: advert.id,
+					image: advert.image,
+					title: advert.title,
+					price: advert.price,
+				}
+				formattedSimplyAdverts.push(simplyAdvert);
+			})
+			return formattedSimplyAdverts;
 		}).catch(error => {
 			if (error.response) {
 				console.log(error.response!.status);

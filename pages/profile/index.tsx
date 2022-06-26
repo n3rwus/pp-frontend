@@ -6,12 +6,51 @@ import { useRouter } from 'next/router';
 import Navbar from '../../components/common/Navbar/Navbar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SimplyAdvert from '../../components/common/Advert/SimplyAdvert';
+import { useEffect, useState } from 'react';
+import { iProfile, ProfileDataProvider } from '../../data/ProfileDataProvider';
+import React from 'react';
 
 const Home: NextPage = () => {
 	const router = useRouter();
 
 	const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 	const id = typeof window !== 'undefined' ? localStorage.getItem('id') : null;
+
+	const profileId = router.query.senderId;
+
+	const [profile, setProfile] = React.useState<iProfile>({
+		id: profileId as string ?? '',
+		username: '',
+		firstName: '',
+		lastName: '',
+		adverts: [],
+	});
+
+	useEffect(() => {
+		loadProfile();
+	}, []);
+
+	const loadProfile = () => {
+		ProfileDataProvider.getUserProfile(profileId as string)
+		.then(res => {
+			if (typeof res === typeof profile) {
+				setProfile(res as iProfile);
+			}
+		});
+	}
+
+	const renderSimplyAdverts =  profile.adverts ? profile.adverts.map((advert, index) => (
+		<Grid item xs={12} sm={6} md={4} sx={{my: '20px'}}>
+			<SimplyAdvert
+				key={index}
+				advertId={advert.advertId}
+				title={advert.title}
+				price={advert.price}
+				image={advert.image}
+			/>
+		</Grid>
+		)) :
+			{};
 
 	return (
 		<div>
@@ -27,17 +66,17 @@ const Home: NextPage = () => {
 					</Grid>
 					<Grid item xs={12}>
 					<Typography fontSize={'30px'} sx={{textAlign:'center'}}>
-						{'MiłośnikPassatów123'} 
+						{profile.username} 
 					</Typography>
 					</Grid>
 					<Grid item xs={12}>
 					<Typography fontSize={'20px'} sx={{textAlign:'center'}}>
-						{'Janusz'} 
+						{profile.firstName} 
 					</Typography>
 					</Grid>
 					<Grid item xs={12}>
 					<Typography fontSize={'20px'} sx={{textAlign:'center'}}>
-						{'Kowalski'} 
+						{profile.lastName} 
 					</Typography>
 					</Grid>
 					<Grid item xs={12} marginTop={'100px'}>
@@ -46,18 +85,11 @@ const Home: NextPage = () => {
 						</Typography>
 						<hr/>
 					</Grid>
-					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert advertId={1}/>
-					</Grid>
-					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert advertId={1}/>
-					</Grid>
-					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert advertId={1}/>
-					</Grid>
-					<Grid item xs={3} sx={{my: '20px'}}>
-						<SimplyAdvert advertId={1}/>
-					</Grid>
+				</Grid>
+			</Box>
+			<Box sx={{ flexGrow: 1, width: '80%', mx: 'auto', backgroundColor: '#fff' }}>
+				<Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{pt:'50px'}}>
+					{renderSimplyAdverts}
 				</Grid>
 			</Box>
 		</div>
